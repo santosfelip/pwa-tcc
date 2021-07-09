@@ -10,12 +10,20 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HomePage } from './pages/home/home.page';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CadastroPage } from './auth/cadastro/cadastro.page';
+import { HeaderComponent } from './components/header/header.component';
+import { LoginPage } from './auth/login/login.page';
+import { ProdutosListaComponent } from './components/produtos-lista/produtos-lista.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		HomePage
+		HomePage,
+		CadastroPage,
+		HeaderComponent,
+		ProdutosListaComponent,
+		LoginPage
 	],
 	entryComponents: [],
 	imports:
@@ -26,6 +34,7 @@ import { FormsModule } from '@angular/forms';
 		AppRoutingModule,
 		CommonModule,
     	FormsModule,
+    	ReactiveFormsModule,
 		ServiceWorkerModule.register('ngsw-worker.js', {
 			enabled: environment.production,
 			registrationStrategy: 'registerWhenStable:30000'

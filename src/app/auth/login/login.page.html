@@ -1,15 +1,11 @@
 
-<ion-header>
-	<ion-toolbar color="primary">
-		<ion-title>QUANTU</ion-title>
-	</ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content [fullscreen]="true">
 	<ion-grid>
 	  <ion-row>
 		<ion-col class="ion-text-center form-login">
-		  <form [formGroup]="login" (ngSubmit)="onLogin()">
+		  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
 
 			<ion-item lines="none" color="light" class="ion-no-inner-padding-end ion-margin">
 				<ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
@@ -25,8 +21,7 @@
 			<span class="ion-margin"></span>
 				<ion-text>ou</ion-text>
 			<span class="ion-margin"></span>
-			<ion-button expand="block" class="ion-margin" [routerLink]="[ '/auth', 'register' ]"
-			  routerDirection="forward">
+			<ion-button expand="block" class="ion-margin" href='/cadastro'>
 			  Cadastre-se
 			</ion-button>
 		  </form>

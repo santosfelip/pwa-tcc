@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { LoginPage } from './auth/login/login/login.page';
+import { LoginPage } from './auth/login/login.page';
 import { HomePage } from './pages/home/home.page';
+import { CadastroPage } from './auth/cadastro/cadastro.page';
 
 const routes: Routes = [
 	{
@@ -11,6 +12,10 @@ const routes: Routes = [
 	{
 		path: 'login',
 		component: LoginPage
+	},
+	{
+		path: 'cadastro',
+		component: CadastroPage
 	},
 	{
 		path: '',
