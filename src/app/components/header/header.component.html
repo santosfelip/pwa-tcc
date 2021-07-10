@@ -1,5 +1,10 @@
 <ion-header>
 	<ion-toolbar color="primary">
-		<ion-title>QUANTU</ion-title>
+		<div id="header-content">
+			<ion-title>QUANTU</ion-title>
+			<ion-buttons slot="end" *ngIf="hasMenu">
+				<ion-menu-button auto-hide="false"></ion-menu-button>
+			</ion-buttons>
+		</div>
 	</ion-toolbar>
 </ion-header>

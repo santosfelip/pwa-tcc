@@ -1,14 +1,7 @@
 <app-menu-lateral></app-menu-lateral>
 
 <ion-content id="main-content">
-	<ion-header>
-		<ion-toolbar color="primary">
-			<ion-buttons slot="start">
-				<ion-menu-button auto-hide="false"></ion-menu-button>
-			</ion-buttons>
-			<ion-title>QUANTU</ion-title>
-		</ion-toolbar>
-	</ion-header>
+	<app-header [hasMenu]="true"></app-header>
 
 	<ion-fab vertical="bottom" horizontal="end" slot="fixed">
 		<ion-fab-button>
