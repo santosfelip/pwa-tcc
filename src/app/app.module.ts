@@ -15,6 +15,7 @@ import { CadastroPage } from './auth/cadastro/cadastro.page';
 import { HeaderComponent } from './components/header/header.component';
 import { LoginPage } from './auth/login/login.page';
 import { ProdutosListaComponent } from './components/produtos-lista/produtos-lista.component';
+import { MenuLateral } from './components/menu-lateral/menu-lateral.component';
 
 @NgModule({
 	declarations: [
@@ -23,7 +24,8 @@ import { ProdutosListaComponent } from './components/produtos-lista/produtos-lis
 		CadastroPage,
 		HeaderComponent,
 		ProdutosListaComponent,
-		LoginPage
+		LoginPage,
+		MenuLateral
 	],
 	entryComponents: [],
 	imports:
