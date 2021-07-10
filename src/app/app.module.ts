@@ -11,11 +11,13 @@ import { environment } from '../environments/environment';
 import { HomePage } from './pages/home/home.page';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MenuLateral } from './components/menu-lateral/menu-lateral.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		HomePage
+		HomePage,
+		MenuLateral
 	],
 	entryComponents: [],
 	imports:
