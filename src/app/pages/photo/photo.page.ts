@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { PhotoService } from '../../services/photo.service';
 
 @Component({
@@ -6,15 +7,23 @@ import { PhotoService } from '../../services/photo.service';
   templateUrl: './photo.page.html',
   styleUrls: ['./photo.page.scss']
 })
-export class PhotoPage implements OnInit {
-	constructor(public photoService: PhotoService) {
-	}
-
-	ngOnInit(): void {
-		this.addPhotoToGallery();
-	}
+export class PhotoPage {
+	public productForm: FormGroup = this.formBuilder.group({
+		nameProduct: '',
+		nameMarket: '',
+		price: '',
+		isPromotion: false
+	});
+	constructor(
+		public photoService: PhotoService,
+		private formBuilder: FormBuilder
+	) {}
 
 	public addPhotoToGallery(): void {
 		this.photoService.addNewToGallery();
+	}
+
+	public addProduct(): void {
+		console.log(this.productForm);
 	}
 }
