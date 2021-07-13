@@ -16,11 +16,13 @@ import { HeaderComponent } from './components/header/header.component';
 import { LoginPage } from './auth/login/login.page';
 import { ProdutosListaComponent } from './components/produtos-lista/produtos-lista.component';
 import { MenuLateral } from './components/menu-lateral/menu-lateral.component';
+import { PhotoPage } from './pages/photo/photo.page';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomePage,
+		PhotoPage,
 		CadastroPage,
 		HeaderComponent,
 		ProdutosListaComponent,

@@ -1,0 +1,21 @@
+<app-menu-lateral></app-menu-lateral>
+
+<ion-content id="main-content">
+	<app-header [hasMenu]="true"></app-header>
+	<ion-fab *ngIf="!photoService.photo" vertical="bottom" horizontal="end" slot="fixed" >
+	  	<ion-fab-button (click)="addPhotoToGallery()">
+			<ion-icon name="camera"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+
+	<ion-grid>
+	  <ion-row>
+		<ion-col *ngIf="photoService.photo">
+		  <ion-img [src]="photoService.photo.webviewPath"></ion-img>
+		</ion-col>
+		<ion-col *ngIf="!photoService.photo">
+			<img src="assets/icons/mobile-tumb.png" />
+		  </ion-col>
+	  </ion-row>
+	</ion-grid>
+</ion-content>
