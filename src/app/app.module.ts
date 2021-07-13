@@ -15,7 +15,7 @@ import { CadastroPage } from './auth/cadastro/cadastro.page';
 import { HeaderComponent } from './components/header/header.component';
 import { LoginPage } from './auth/login/login.page';
 import { ProdutosListaComponent } from './components/produtos-lista/produtos-lista.component';
-import { MenuLateral } from './components/menu-lateral/menu-lateral.component';
+import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
 import { PhotoPage } from './pages/photo/photo.page';
 
 @NgModule({
@@ -27,7 +27,7 @@ import { PhotoPage } from './pages/photo/photo.page';
 		HeaderComponent,
 		ProdutosListaComponent,
 		LoginPage,
-		MenuLateral
+		MenuLateralComponent
 	],
 	entryComponents: [],
 	imports:
@@ -45,6 +45,6 @@ import { PhotoPage } from './pages/photo/photo.page';
 		})
 	],
 	providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}
