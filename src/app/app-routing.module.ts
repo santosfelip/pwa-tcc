@@ -4,6 +4,7 @@ import { LoginPage } from './auth/login/login.page';
 import { HomePage } from './pages/home/home.page';
 import { CadastroPage } from './auth/cadastro/cadastro.page';
 import { PhotoPage } from './pages/photo/photo.page';
+import { PerfilPage } from './pages/perfil/perfil.page.component';
 
 const routes: Routes = [
 	{
@@ -13,6 +14,10 @@ const routes: Routes = [
 	{
 		path: 'login',
 		component: LoginPage
+	},
+	{
+		path: 'perfil',
+		component: PerfilPage
 	},
 	{
 		path: 'photo',

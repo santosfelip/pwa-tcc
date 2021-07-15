@@ -17,12 +17,14 @@ import { LoginPage } from './auth/login/login.page';
 import { ProdutosListaComponent } from './components/produtos-lista/produtos-lista.component';
 import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
 import { PhotoPage } from './pages/photo/photo.page';
+import { PerfilPage } from './pages/perfil/perfil.page.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomePage,
 		PhotoPage,
+		PerfilPage,
 		CadastroPage,
 		HeaderComponent,
 		ProdutosListaComponent,
