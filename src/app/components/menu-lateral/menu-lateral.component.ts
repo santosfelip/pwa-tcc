@@ -4,8 +4,7 @@ import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu-lateral',
-  templateUrl: './menu-lateral.component.html',
-  styleUrls: ['./menu-lateral.component.scss'],
+  templateUrl: './menu-lateral.component.html'
 })
 export class MenuLateralComponent {
 	constructor(
