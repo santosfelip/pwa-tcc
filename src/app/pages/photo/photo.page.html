@@ -2,36 +2,16 @@
 
 <ion-content id="main-content">
 	<app-header [hasMenu]="true"></app-header>
-
-	<ion-grid>
-	  <ion-row>
-		<ion-col *ngIf="photoService.photo">
-		  <ion-img [src]="photoService.photo.webviewPath"></ion-img>
-		</ion-col>
-	  </ion-row>
-	  <ion-row>
-		<ion-col class="ion-text-center">
-			<form [formGroup]="productForm" (ngSubmit)="onLogin()">
-				<ion-item lines="none" color="light" class="ion-no-inner-padding-end ion-margin">
-					<ion-input type="text" placeholder="Nome do Produto" formControlName="nameProduct"></ion-input>
-				</ion-item>
-				<ion-item lines="none" color="light" class="ion-no-inner-padding-end ion-margin">
-					<ion-input type="text" placeholder="Nome do Mercado" formControlName="nameMarket"></ion-input>
-				</ion-item>
-				<ion-item lines="none" color="light" class="ion-no-inner-padding-end ion-margin">
-					<ion-input type="number" placeholder="Preço" formControlName="price"></ion-input>
-				</ion-item>
-
-				<ion-item lines="none" color="light" class="ion-no-inner-padding-end ion-margin">
-					<ion-label>Produto em promoção</ion-label>
-					<ion-checkbox mode="ios" color="primary" slot="start" formControlName="isPromotion"></ion-checkbox>
-				</ion-item>
-
-				<span class="ion-margin"></span>
-				<ion-button expand="block" class="ion-margin" (click)="addPhotoToGallery()" [disabled]="photoService.photo">Tirar Foto do Produto</ion-button>
-				<ion-button expand="block" class="ion-margin" (click)="addProduct()" [disabled]="!photoService.photo">Salvar</ion-button>
-			</form>
-		  </ion-col>
-	  </ion-row>
-	</ion-grid>
+		<div class="image-product">
+			<ion-img
+				*ngIf="photoService.photo"
+				[src]="photoService.photo.webviewPath">
+			</ion-img>
+		</div>
+		<div class="line-image"></div>
+		<app-form
+			[formGroup] = "productForm"
+			[formFields] = "formFields"
+			[formButtons] = "formButtons"
+		></app-form>
 </ion-content>

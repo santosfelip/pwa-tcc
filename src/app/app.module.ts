@@ -18,6 +18,7 @@ import { ProdutosListaComponent } from './components/produtos-lista/produtos-lis
 import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
 import { PhotoPage } from './pages/photo/photo.page';
 import { PerfilPage } from './pages/perfil/perfil.page.component';
+import { FormComponent } from './components/form/form.component';
 
 @NgModule({
 	declarations: [
@@ -29,7 +30,8 @@ import { PerfilPage } from './pages/perfil/perfil.page.component';
 		HeaderComponent,
 		ProdutosListaComponent,
 		LoginPage,
-		MenuLateralComponent
+		MenuLateralComponent,
+		FormComponent
 	],
 	entryComponents: [],
 	imports:

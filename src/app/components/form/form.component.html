@@ -1,0 +1,43 @@
+<ion-content>
+	<ion-grid>
+		<ion-row>
+			<ion-col class="ion-text-center">
+				<form [formGroup]="formGroup">
+					<ion-item
+						*ngFor="let field of formFields"
+						lines="none"
+						color="light"
+						class="ion-no-inner-padding-end ion-margin"
+					>
+						<ion-input
+							*ngIf="field.type !== 'checkbox'"
+							[type]="field.type"
+							[placeholder]="field.placeholder"
+							[formControlName]="field.formControlName">
+						</ion-input>
+
+						<ion-label>{{field?.label}}</ion-label>
+						<ion-checkbox
+							*ngIf="field.type === 'checkbox'"
+							mode="ios"
+							color="primary"
+							slot="start"
+							[formControlName]="field.formControlName"
+						></ion-checkbox>
+
+					</ion-item>
+
+					<ion-button
+						*ngFor="let button of formButtons"
+						(click)="button.onClick()"
+						expand="block"
+						class="ion-margin"
+					>
+						{{button.label}}
+					</ion-button>
+				</form>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>
+
