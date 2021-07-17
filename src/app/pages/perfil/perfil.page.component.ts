@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
+import { IUser } from 'src/app/interfaces/user.interface';
+import { AuthTokenService } from 'src/app/services/auth-token.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-perfilt',
   templateUrl: './perfil.page.html'
 })
 export class PerfilPage implements OnInit {
+
 	public registerForm: FormGroup = this.formBuilder.group({
 		name: '',
 		email: '',
@@ -36,16 +41,51 @@ export class PerfilPage implements OnInit {
 	public formButtons: Array<FormButton> = [
 		{
 			label: 'Salvar',
-			onClick: () => this.redirectToHome()
+			onClick: () => this.editUser()
 		}
 	];
 
-	constructor(private formBuilder: FormBuilder, private router: Router) { }
+	private currentUser: IUser;
+
+	constructor(
+		private formBuilder: FormBuilder,
+		private router: Router,
+		private userService: UserService,
+		private tokenService: AuthTokenService,
+		public toastController: ToastController
+	) { }
 
 	ngOnInit() {
+		this.currentUser = this.tokenService.decodePayloadJWT();
+		this.registerForm.setValue({
+			name: this.currentUser.name,
+			email: this.currentUser.email,
+			password: ''
+		});
 	}
 
-	public redirectToHome(): void {
-		this.router.navigate(['/home'], { replaceUrl: true });
+	public async editUser(): Promise<void> {
+		const user: IUser = this.registerForm.value;
+		user.userId = this.currentUser.userId;
+
+		try {
+			await this.userService.editUser(user);
+
+			const toast = await this.toastController.create({
+				message: 'Usuário Alterado com Sucesso!',
+				duration: 2000,
+				color: 'success'
+			});
+			toast.present();
+
+			this.router.navigate(['/home'], { replaceUrl: true });
+		} catch (err) {
+			const toast = await this.toastController.create({
+				message: 'Dados Inválidos!',
+				duration: 2000,
+				color: 'danger'
+			});
+			toast.present();
+		}
 	}
 }

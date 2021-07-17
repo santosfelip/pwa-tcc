@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -19,11 +19,13 @@ import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.com
 import { PhotoPage } from './pages/photo/photo.page';
 import { PerfilPage } from './pages/perfil/perfil.page.component';
 import { FormComponent } from './components/form/form.component';
+import { AuthGuardService } from './auth/guards/auth-guard.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		HomePage,
+		HomePage,//import { HttpClientModule, HttpClient } from '@angular/common/http';
 		PhotoPage,
 		PerfilPage,
 		CadastroPage,
@@ -38,6 +40,7 @@ import { FormComponent } from './components/form/form.component';
 	[
 		BrowserModule,
 		IonicModule,
+		HttpClientModule,
 		IonicModule.forRoot(),
 		AppRoutingModule,
 		CommonModule,
@@ -48,7 +51,10 @@ import { FormComponent } from './components/form/form.component';
 			registrationStrategy: 'registerWhenStable:30000'
 		})
 	],
-	providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+	providers: [
+		AuthGuardService,
+		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -5,11 +5,13 @@ import { HomePage } from './pages/home/home.page';
 import { CadastroPage } from './auth/cadastro/cadastro.page';
 import { PhotoPage } from './pages/photo/photo.page';
 import { PerfilPage } from './pages/perfil/perfil.page.component';
+import { AuthGuardService } from './auth/guards/auth-guard.service';
 
 const routes: Routes = [
 	{
 		path: 'home',
-		component: HomePage
+		component: HomePage,
+		canActivate: [AuthGuardService]
 	},
 	{
 		path: 'login',
@@ -32,7 +34,7 @@ const routes: Routes = [
 		redirectTo: 'login',
 		pathMatch: 'full'
 	},
-	{ path: '**', redirectTo: 'login'}
+	{ path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
+import { AuthService } from '../guards/auth.service';
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html'
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
 	public loginForm: FormGroup = this.formBuilder.group({
 		email: '',
 		password: ''
@@ -29,7 +31,7 @@ export class LoginPage implements OnInit {
 	public formButtons: Array<FormButton> = [
 		{
 			label: 'Entrar',
-			onClick: () => this.redirectToHome()
+			onClick: () => this.signIn()
 		},
 		{
 			label: 'Cadastre-se',
@@ -39,13 +41,25 @@ export class LoginPage implements OnInit {
 
     constructor(
 		private formBuilder: FormBuilder,
-		public router: Router) { }
+		private authService: AuthService,
+		public router: Router,
+		public toastController: ToastController) { }
 
-    ngOnInit() {
-    }
+	public async signIn(): Promise<void> {
+		const { email, password } = this.loginForm.value;
 
-	public redirectToHome(): void {
-		this.router.navigate(['/home'], { replaceUrl: true });
+		try {
+			await this.authService.signIn(email, password);
+
+			this.router.navigate(['/home'], { replaceUrl: true });
+		} catch (err) {
+			const toast = await this.toastController.create({
+				message: 'Email ou Senha inválidos!',
+				duration: 2000,
+				color: 'danger'
+			});
+			toast.present();
+		}
 	}
 
 	public redirectToRegister(): void {
