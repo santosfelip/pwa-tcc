@@ -3,12 +3,11 @@
 <ion-content id="main-content">
 	<app-header [hasMenu]="true"></app-header>
 		<div class="image-product">
-			<ion-img
-				*ngIf="photoService.photo"
-				[src]="photoService.photo.webviewPath">
-			</ion-img>
+			<ion-template *ngIf="photoService.photo?.webviewPath">
+				<img [src]="photoService.photo.webviewPath">
+			</ion-template>
 		</div>
-		<div class="line-image"></div>
+		<div *ngIf="photoService.photo?.webviewPath" class="line-image"></div>
 		<app-form
 			[formGroup] = "productForm"
 			[formFields] = "formFields"

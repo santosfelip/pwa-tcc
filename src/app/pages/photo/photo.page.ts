@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ToastController } from '@ionic/angular';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
+import { ProductService } from 'src/app/services/product.service';
 import { PhotoService } from '../../services/photo.service';
 
 @Component({
@@ -9,26 +11,25 @@ import { PhotoService } from '../../services/photo.service';
   templateUrl: './photo.page.html',
   styleUrls: ['./photo.page.scss']
 })
-export class PhotoPage {
+export class PhotoPage implements OnDestroy {
 
-	public disable = true;
 	public productForm: FormGroup = this.formBuilder.group({
-		nameProduct: '',
-		nameMarket: '',
+		title: '',
+		market_name: '',
 		price: '',
-		isPromotion: false
+		isPromotional: false
 	});
 
 	public formFields: Array<FormField> = [
 		{
 			type: 'text',
 			placeholder: 'Nome do Produto',
-			formControlName: 'nameProduct'
+			formControlName: 'title'
 		},
 		{
 			type: 'text',
 			placeholder: 'Nome do Mercado',
-			formControlName: 'nameMarket'
+			formControlName: 'market_name'
 		},
 		{
 			type: 'number',
@@ -38,14 +39,14 @@ export class PhotoPage {
 		{
 			label: 'Produto em Promoção',
 			type: 'checkbox',
-			formControlName: 'isPromotion'
+			formControlName: 'isPromotional'
 		}
 	];
 
 	public formButtons: Array<FormButton> = [
 		{
 			label: 'Tirar foto do produto',
-			onClick: () => this.addPhotoToGallery(),
+			onClick: () => this.addPhoto(),
 		},
 		{
 			label: 'Salvar',
@@ -55,19 +56,49 @@ export class PhotoPage {
 
 	constructor(
 		public photoService: PhotoService,
-		private formBuilder: FormBuilder
-	) {
+		private formBuilder: FormBuilder,
+		private productService: ProductService,
+		private toastController: ToastController
+	) {}
 
-		console.log(!!this.photoService.photo);
-		console.log(!this.photoService.photo);
+	public addPhoto(): void {
+		this.photoService.addNewPhoto();
 	}
 
-	public addPhotoToGallery(): void {
-		this.photoService.addNewToGallery();
-		this.disable = false;
+	public async addProduct(): Promise<void> {
+		const product = {
+			...this.productForm.value,
+			image: this.photoService.photo.imgInBase64
+		};
+
+		try {
+			await this.productService.addProduct(product);
+
+			// Limpar dados do form e da imagem
+			this.clearAllData();
+
+			const toast = await this.toastController.create({
+				message: 'Usuário Cadastrado com Sucesso!',
+				duration: 3000,
+				color: 'success'
+			});
+			toast.present();
+		} catch (error) {
+			const toast = await this.toastController.create({
+				message: 'Dados Inválidos!',
+				duration: 2000,
+				color: 'danger'
+			});
+			toast.present();
+		}
 	}
 
-	public addProduct(): void {
-		console.log(this.productForm);
+	ngOnDestroy(): void {
+		this.photoService.photo = null;
+	}
+
+	private clearAllData(): void {
+		this.productForm.reset();
+		this.photoService.photo = null;
 	}
 }

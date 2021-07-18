@@ -1,3 +1,6 @@
+import { SafeResourceUrl } from '@angular/platform-browser';
+
 export interface Photo {
-	webviewPath: string;
+	webviewPath: SafeResourceUrl;
+	imgInBase64: string;
 }
