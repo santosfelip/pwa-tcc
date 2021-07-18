@@ -19,11 +19,13 @@ const routes: Routes = [
 	},
 	{
 		path: 'perfil',
-		component: PerfilPage
+		component: PerfilPage,
+		canActivate: [AuthGuardService]
 	},
 	{
 		path: 'photo',
-		component: PhotoPage
+		component: PhotoPage,
+		canActivate: [AuthGuardService]
 	},
 	{
 		path: 'cadastro',
