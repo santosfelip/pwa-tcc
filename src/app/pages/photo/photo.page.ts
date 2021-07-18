@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
 import { ProductService } from 'src/app/services/product.service';
@@ -58,7 +58,8 @@ export class PhotoPage implements OnDestroy {
 		public photoService: PhotoService,
 		private formBuilder: FormBuilder,
 		private productService: ProductService,
-		private toastController: ToastController
+		private toastController: ToastController,
+		private loadingController: LoadingController
 	) {}
 
 	public addPhoto(): void {
@@ -72,7 +73,16 @@ export class PhotoPage implements OnDestroy {
 		};
 
 		try {
+
+			const loading = await this.loadingController.create({
+				message: 'Salvando...',
+				duration: 5000
+			});
+			await loading.present();
+
 			await this.productService.addProduct(product);
+
+			loading.dismiss();
 
 			// Limpar dados do form e da imagem
 			this.clearAllData();

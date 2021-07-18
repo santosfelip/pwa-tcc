@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
 import { AuthService } from '../guards/auth.service';
@@ -50,7 +50,8 @@ export class CadastroPage {
 		private formBuilder: FormBuilder,
 		private authService: AuthService,
 		private router: Router,
-		public toastController: ToastController
+		public toastController: ToastController,
+		private loadingController: LoadingController
 	) { }
 
 	public redirectToLogin(): void {
@@ -61,7 +62,15 @@ export class CadastroPage {
 		const newUser = this.registerForm.value;
 
 		try {
+			const loading = await this.loadingController.create({
+				message: 'Salvando...',
+				duration: 5000
+			});
+			await loading.present();
+
 			await this.authService.signUp(newUser);
+
+			loading.dismiss();
 
 			const toast = await this.toastController.create({
 				message: 'Usuário Cadastrado com Sucesso!',
