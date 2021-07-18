@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
 import { IUser } from 'src/app/interfaces/user.interface';
@@ -52,7 +52,8 @@ export class PerfilPage implements OnInit {
 		private router: Router,
 		private userService: UserService,
 		private tokenService: AuthTokenService,
-		public toastController: ToastController
+		public toastController: ToastController,
+		private loadingController: LoadingController
 	) { }
 
 	ngOnInit() {
@@ -68,8 +69,16 @@ export class PerfilPage implements OnInit {
 		const user: IUser = this.registerForm.value;
 		user.userId = this.currentUser.userId;
 
+		const loading = await this.loadingController.create({
+			message: 'Salvando...',
+			duration: 5000
+		});
 		try {
+			await loading.present();
+
 			await this.userService.editUser(user);
+
+			loading.dismiss();
 
 			const toast = await this.toastController.create({
 				message: 'Usuário Alterado com Sucesso!',
@@ -80,6 +89,7 @@ export class PerfilPage implements OnInit {
 
 			this.router.navigate(['/home'], { replaceUrl: true });
 		} catch (err) {
+			loading.dismiss();
 			const toast = await this.toastController.create({
 				message: 'Dados Inválidos!',
 				duration: 2000,
