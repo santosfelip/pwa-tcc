@@ -76,7 +76,7 @@ export class PhotoPage implements OnDestroy {
 
 			const loading = await this.loadingController.create({
 				message: 'Salvando...',
-				duration: 5000
+				duration: 30000
 			});
 			await loading.present();
 

@@ -18,9 +18,8 @@ export class HomePage {
 
 	async ionViewWillEnter() {
 		try {
-			await this.loading.show('Buscando Produtos no raio de 5km...', 5000);
+			await this.loading.show('Buscando Produtos no raio de 5km...', 30000);
 			this.productsList = await this.productService.getAllProducts();
-			console.log(this.productsList);
 		} catch (err) {
 			console.log(err);
 		}

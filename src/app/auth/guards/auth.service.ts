@@ -22,11 +22,11 @@ export class AuthService {
 
 	public logout(): void {
 		this.currentUserAuthenticated = null;
+		this.authTokenService.saveToken('');
 	}
 
 	public async signUp(newUser: IUser): Promise<void> {
 		const endpoint: string = `${API.v1}/user/register`;
-		console.log(endpoint);
 
 		try {
 			await this.httpClient.post(endpoint, newUser).toPromise();
