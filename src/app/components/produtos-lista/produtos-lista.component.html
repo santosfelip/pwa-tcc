@@ -1,56 +1,10 @@
-<ion-card>
-	<div id="img-content">
-		<img src="https://static.poder360.com.br/2020/09/Arroz-Supermercado-AltaPreco-Preco-Abastecimento-Alimento-114-scaled.jpg" />
-	</div>
-	<ion-card-header>
-		<ion-card-subtitle>Comper</ion-card-subtitle>
-	  	<ion-card-title>Arroz 5 Kg - R$ 25,00</ion-card-title>
-		<ion-card-subtitle>Foto tirada em perído promocional</ion-card-subtitle>
-	</ion-card-header>
-	<ion-card-content>
-		<ion-icon name="cart"></ion-icon>
-		<p>100 metros de distância</p>
-	</ion-card-content>
-</ion-card>
-<ion-card>
-	<div id="img-content">
-		<img src="https://thumbs.dreamstime.com/b/produtos-de-leite-em-prateleiras-do-supermercado-local-russo-124800399.jpg" />
-	</div>
-	<ion-card-header>
-		<ion-card-subtitle>Comper</ion-card-subtitle>
-	  	<ion-card-title>Shampoo - R$ 28,00</ion-card-title>
-		<!-- <ion-card-subtitle>Foto tirada em perído promocional</ion-card-subtitle> -->
-	</ion-card-header>
-	<ion-card-content>
-		<ion-icon name="cart"></ion-icon>
-		<p>100 metros de distância</p>
-	</ion-card-content>
-</ion-card>
-<ion-card>
-	<div id="img-content">
-		<img src="https://png.pngtree.com/png-clipart/20190115/ourmid/pngtree-uighur-little-girl-image-minority-cartoon-image-cute-uighur-little-girl-png-image_350751.jpg" />
-	</div>
-	<ion-card-header>
-		<ion-card-subtitle>Comper</ion-card-subtitle>
-	  	<ion-card-title>Arroz 5 Kg - R$ 25,00</ion-card-title>
-		<ion-card-subtitle>Foto tirada em perído promocional</ion-card-subtitle>
-	</ion-card-header>
-	<ion-card-content>
-		<ion-icon name="cart"></ion-icon>
-		<p>100 metros de distância</p>
-	</ion-card-content>
-</ion-card>
-<ion-card>
-	<div id="img-content">
-		<img src="https://static.poder360.com.br/2020/09/Arroz-Supermercado-AltaPreco-Preco-Abastecimento-Alimento-114-scaled.jpg" />
-	</div>
-	<ion-card-header>
-		<ion-card-subtitle>Comper</ion-card-subtitle>
-	  	<ion-card-title>Arroz 5 Kg - R$ 25,00</ion-card-title>
-		<ion-card-subtitle>Foto tirada em perído promocional</ion-card-subtitle>
-	</ion-card-header>
-	<ion-card-content>
-		<ion-icon name="cart"></ion-icon>
-		<p>100 metros de distância</p>
-	</ion-card-content>
-</ion-card>
+<app-produto
+	*ngFor="let product of productsList"
+	[image] = "product.image"
+	[price] = "product.price"
+	[marketName] = "product.market_name"
+	[productName] = "product.title"
+	[isPromotional] = "product.isPromotional"
+	[distance] = "product.distance"
+>
+</app-produto>

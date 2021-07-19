@@ -1,0 +1,14 @@
+<ion-card>
+	<div id="img-content">
+		<img [src]="image" />
+	</div>
+	<ion-card-header>
+		<ion-card-subtitle>{{marketName}}</ion-card-subtitle>
+	  	<ion-card-title>{{productName}} - R$ {{price}}</ion-card-title>
+		<ion-card-subtitle *ngIf="isPromotional">Foto tirada em perído promocional</ion-card-subtitle>
+	</ion-card-header>
+	<ion-card-content>
+		<ion-icon name="cart"></ion-icon>
+		<p>{{distance}}</p>
+	</ion-card-content>
+</ion-card>

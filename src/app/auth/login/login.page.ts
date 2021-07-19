@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
 import { AuthService } from '../guards/auth.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
+import { Loading } from 'src/app/utils/loading';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html'
@@ -44,23 +45,18 @@ export class LoginPage {
 		private authService: AuthService,
 		public router: Router,
 		public toastController: ToastController,
-		private loadingController: LoadingController) { }
+		private loading: Loading) {}
 
 	public async signIn(): Promise<void> {
 		const { email, password } = this.loginForm.value;
 
-		const loading = await this.loadingController.create({
-			duration: 3000
-		});
 		try {
-			await loading.present();
+			await this.loading.default();
 
 			await this.authService.signIn(email, password);
 
-			loading.dismiss();
 			this.router.navigate(['/home'], { replaceUrl: true });
 		} catch (err) {
-			loading.dismiss();
 			const toast = await this.toastController.create({
 				message: 'Email ou Senha inválidos!',
 				duration: 2000,
@@ -68,6 +64,8 @@ export class LoginPage {
 			});
 			toast.present();
 		}
+
+		await this.loading.hidde();
 	}
 
 	public redirectToRegister(): void {

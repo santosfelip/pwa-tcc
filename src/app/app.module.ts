@@ -21,11 +21,13 @@ import { PerfilPage } from './pages/perfil/perfil.page.component';
 import { FormComponent } from './components/form/form.component';
 import { AuthGuardService } from './auth/guards/auth-guard.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ProdutoComponent } from './components/produtos-lista/produto/produto.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		HomePage,//import { HttpClientModule, HttpClient } from '@angular/common/http';
+		ProdutoComponent,
+		HomePage,
 		PhotoPage,
 		PerfilPage,
 		CadastroPage,

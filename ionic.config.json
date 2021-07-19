@@ -1,5 +1,7 @@
 {
   "name": "pwa-tcc",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
