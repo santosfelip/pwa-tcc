@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Loading } from 'src/app/utils/loading';
 import { IProduct } from 'src/app/services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -13,7 +14,8 @@ export class ProductPage {
 
 	constructor(
 		private productService: ProductService,
-		private loading: Loading
+		private loading: Loading,
+		private router: Router
 	) { }
 
 	async ionViewWillEnter() {
@@ -25,5 +27,9 @@ export class ProductPage {
 		}
 
 		await this.loading.hidde();
+	}
+
+	public redirectToTakePhoto(): void {
+		this.router.navigate(['/photo'], { replaceUrl: true });
 	}
 }

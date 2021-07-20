@@ -1,7 +1,6 @@
 <app-menu-lateral></app-menu-lateral>
-
+<app-header [hasMenu]="true"></app-header>
 <ion-content id="main-content">
-	<app-header [hasMenu]="true"></app-header>
 		<div class="image-product">
 			<ion-template *ngIf="photoService.photo?.webviewPath">
 				<img [src]="photoService.photo.webviewPath">
