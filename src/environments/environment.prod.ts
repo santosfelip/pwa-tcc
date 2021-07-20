@@ -3,5 +3,5 @@ export const environment = {
 };
 
 export const API = {
-	v1: 'http://10.0.0.102:9000/app/v1'
+	v1: 'https://safe-headland-61171.herokuapp.com/app/v1'
 };
