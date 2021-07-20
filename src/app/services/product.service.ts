@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API } from 'src/environments/environment';
 import { GeoLocation } from '../libraries/geoLocation';
@@ -61,6 +61,21 @@ export class ProductService {
 
 			const headers: HttpHeaders = new HttpHeaders({
                 authorization: `Bearer ${token}`
+            });
+
+			return await this.httpClient.get(endpoint, { headers }).toPromise();
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	public async getProductById(): Promise<any> {
+		try {
+			const { userId } = this.authTokenService.decodePayloadJWT();
+			const endpoint: string = `${API.v1}/product/${userId}`;
+
+			const headers: HttpHeaders = new HttpHeaders({
+                authorization: `Bearer ${this.authTokenService.getToken()}`
             });
 
 			return await this.httpClient.get(endpoint, { headers }).toPromise();

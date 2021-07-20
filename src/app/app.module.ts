@@ -22,12 +22,14 @@ import { FormComponent } from './components/form/form.component';
 import { AuthGuardService } from './auth/guards/auth-guard.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProdutoComponent } from './components/produtos-lista/produto/produto.component';
+import { ProductPage } from './pages/product/product.page';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		ProdutoComponent,
 		HomePage,
+		ProductPage,
 		PhotoPage,
 		PerfilPage,
 		CadastroPage,

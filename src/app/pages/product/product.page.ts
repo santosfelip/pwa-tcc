@@ -1,35 +1,29 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { Loading } from 'src/app/utils/loading';
 import { IProduct } from 'src/app/services/product.service';
+
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss']
+  selector: 'app-product',
+  templateUrl: './product.page.html'
 })
-export class HomePage {
+export class ProductPage {
 	public productsList: Array<IProduct>;
-	public showDistance: boolean = true;
+	public showDistance: boolean = false;
 
 	constructor(
-		private router: Router,
 		private productService: ProductService,
 		private loading: Loading
 	) { }
 
 	async ionViewWillEnter() {
 		try {
-			await this.loading.show('Buscando Produtos no raio de 5km...', 30000);
-			this.productsList = await this.productService.getAllProducts();
+			await this.loading.default();
+			this.productsList = await this.productService.getProductById();
 		} catch (err) {
 			console.log(err);
 		}
 
 		await this.loading.hidde();
-	}
-
-	public redirectToTakePhoto(): void {
-		this.router.navigate(['/photo'], { replaceUrl: true });
 	}
 }

@@ -5,7 +5,8 @@ import { FormField } from 'src/app/interfaces/form-field.interface';
 
 @Component({
   selector: 'app-form',
-  templateUrl: './form.component.html'
+  templateUrl: './form.component.html',
+  styleUrls:['./form.component.scss']
 })
 export class FormComponent {
 	@Input() formGroup: FormGroup;

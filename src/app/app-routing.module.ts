@@ -6,6 +6,7 @@ import { CadastroPage } from './auth/cadastro/cadastro.page';
 import { PhotoPage } from './pages/photo/photo.page';
 import { PerfilPage } from './pages/perfil/perfil.page.component';
 import { AuthGuardService } from './auth/guards/auth-guard.service';
+import { ProductPage } from './pages/product/product.page';
 
 const routes: Routes = [
 	{
@@ -16,6 +17,11 @@ const routes: Routes = [
 	{
 		path: 'login',
 		component: LoginPage
+	},
+	{
+		path: 'produto',
+		component: ProductPage,
+		canActivate: [AuthGuardService]
 	},
 	{
 		path: 'perfil',

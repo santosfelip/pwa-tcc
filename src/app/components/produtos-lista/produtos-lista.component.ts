@@ -9,5 +9,6 @@ import { IProduct } from 'src/app/services/product.service';
 export class ProdutosListaComponent {
 
 	@Input() productsList: Array<IProduct>;
+	@Input() showDistance: boolean;
 
 }

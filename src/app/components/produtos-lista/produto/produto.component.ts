@@ -12,4 +12,10 @@ export class ProdutoComponent {
 	@Input() productName: string;
 	@Input() isPromotional: boolean;
 	@Input() distance: string;
+	@Input() showDistance: boolean;
+
+	public classCss: string;
+	constructor() {
+		this.classCss = !this.showDistance ? 'not-distance' : 'show-distance';
+	}
 }
