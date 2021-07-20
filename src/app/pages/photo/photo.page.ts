@@ -108,7 +108,12 @@ export class PhotoPage implements OnDestroy {
 	}
 
 	private clearAllData(): void {
-		this.productForm.reset();
+		this.productForm.setValue({
+			title: '',
+			market_name: '',
+			price: '',
+			isPromotional: false
+		});
 		this.photoService.photo = null;
 	}
 }
