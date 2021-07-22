@@ -1,4 +1,5 @@
 import { DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, Inject, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormButton } from 'src/app/interfaces/button.interface';
@@ -15,10 +16,11 @@ export class FormComponent {
 	@Input() formFields: Array<FormField>;
 	@Input() formButtons: Array<FormButton>;
 
-	constructor(@Inject(DOCUMENT) private document: Document){}
+	constructor(
+		@Inject(DOCUMENT) private document: Document){}
 
 	// eslint-disable-next-line @angular-eslint/use-lifecycle-interface
-	ngAfterViewInit(): void {
+	async ngAfterViewInit(): Promise<void> {
 		const input = this.document.getElementById('autocomplete') as HTMLInputElement;
 		if(input) {
 			const center = { lat: 20.5072637, lng: -54.6643489 };

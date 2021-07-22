@@ -37,7 +37,7 @@ export class PhotoPage implements OnDestroy {
 			formControlName: 'price'
 		},
 		{
-			label: 'Produto em Promoção',
+			label: 'Produto em Promoção?',
 			type: 'checkbox',
 			formControlName: 'isPromotional'
 		}
