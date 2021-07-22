@@ -26,8 +26,6 @@ export class HomePage {
 
 			const ip: any = await this.httpClient.get('http://ip.jsontest.com').toPromise();
 			console.log(ip);
-			const infoUser = await this.httpClient.get(`https://ipapi.co/json/`).toPromise();
-			console.log(infoUser);
 			this.productsList = await this.productService.getAllProducts();
 		} catch (err) {
 			console.log(err);
