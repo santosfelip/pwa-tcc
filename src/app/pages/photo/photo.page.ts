@@ -27,7 +27,7 @@ export class PhotoPage implements OnDestroy {
 			formControlName: 'title'
 		},
 		{
-			type: 'text',
+			type: 'autocompleteMaps',
 			placeholder: 'Nome do Mercado',
 			formControlName: 'market_name'
 		},

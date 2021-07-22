@@ -10,11 +10,19 @@
 						class="ion-no-inner-padding-end ion-margin"
 					>
 						<ion-input
-							*ngIf="field.type !== 'checkbox'"
+							*ngIf="field.type !== 'autocompleteMaps' && field.type !== 'checkbox'"
 							[type]="field.type"
 							[placeholder]="field.placeholder"
-							[formControlName]="field.formControlName">
+							[formControlName]="field.formControlName"
+						>
 						</ion-input>
+						<input
+							*ngIf="field.type === 'autocompleteMaps'"
+							type="text"
+							id="autocomplete"
+							[formControlName]="field.formControlName"
+							[placeholder]="field.placeholder"
+						>
 
 						<ion-label>{{field?.label}}</ion-label>
 						<ion-checkbox
@@ -24,7 +32,6 @@
 							slot="start"
 							[formControlName]="field.formControlName"
 						></ion-checkbox>
-
 					</ion-item>
 
 					<ion-button

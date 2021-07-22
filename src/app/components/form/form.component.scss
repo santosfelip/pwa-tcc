@@ -1,3 +1,28 @@
-ion-input {
+ion-input,#autocomplete {
     font-size: 18px;
+	font-size: 18px;
+	border:none;
+	width: 100%;
+	height: 50px;
+	padding: 15px;
+	background-color: #f4f5f8;
+	text-decoration: none;
+}
+ion-input::-webkit-outer-spin-button,
+ion-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+ion-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+#autocomplete:focus {
+	outline:none!important;
+}
+
+input:focus {
+	outline:none!important;
 }

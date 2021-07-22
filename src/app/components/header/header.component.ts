@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +9,8 @@ import { Component, Input } from '@angular/core';
 export class HeaderComponent {
 	@Input() hasMenu: boolean;
 
-	constructor() {
-
+	constructor(private router: Router){}
+	public redirectToHome() {
+		this.router.navigate(['/home'], { replaceUrl: true });
 	}
-
 }
