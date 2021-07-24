@@ -10,7 +10,7 @@ export class Loading {
 	constructor(private loadingController: LoadingController,
 		){}
 
-	public async show(message: string, duration: number = 2000): Promise<void> {
+	public async show(message: string, duration: number = 30000): Promise<void> {
 		this.loadingElement = await this.loadingController.create({
 			message,
 			duration

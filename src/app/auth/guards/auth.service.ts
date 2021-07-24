@@ -31,7 +31,12 @@ export class AuthService {
 		try {
 			await this.httpClient.post(endpoint, newUser).toPromise();
 		} catch (err) {
-			throw Error('Falha na Requisição!');
+			let message = 'Dados Inválido!';
+			if(typeof err?.error?.data === 'string') {
+				message =  err?.error?.data;
+			}
+
+			throw Error(message);
 		}
 	}
 
@@ -48,7 +53,7 @@ export class AuthService {
 			this.authTokenService.saveToken(response.accessToken);
 			this.saveCurrentUser();
 		} catch (err) {
-			throw Error('Falha na Requisição!');
+			throw Error('Email ou Senha Inválidos!');
 		}
     }
 

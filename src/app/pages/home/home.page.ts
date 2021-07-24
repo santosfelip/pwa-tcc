@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { Loading } from 'src/app/utils/loading';
 import { IProduct } from 'src/app/services/product.service';
-import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -16,16 +15,13 @@ export class HomePage {
 	constructor(
 		private router: Router,
 		private productService: ProductService,
-		private loading: Loading,
-		private httpClient: HttpClient
+		private loading: Loading
 	) { }
 
 	async ionViewWillEnter() {
 		try {
 			await this.loading.show('Buscando Produtos no raio de 5km...', 30000);
 
-			const ip: any = await this.httpClient.get('http://ip.jsontest.com').toPromise();
-			console.log(ip);
 			this.productsList = await this.productService.getAllProducts();
 		} catch (err) {
 			console.log(err);

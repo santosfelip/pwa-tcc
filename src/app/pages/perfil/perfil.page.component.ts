@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController, ToastController } from '@ionic/angular';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
 import { IUser } from 'src/app/interfaces/user.interface';
 import { AuthTokenService } from 'src/app/services/auth-token.service';
 import { UserService } from 'src/app/services/user.service';
+import { Loading } from 'src/app/utils/loading';
+import { Toast } from 'src/app/utils/toast';
 
 @Component({
   selector: 'app-perfilt',
@@ -52,8 +53,8 @@ export class PerfilPage implements OnInit {
 		private router: Router,
 		private userService: UserService,
 		private tokenService: AuthTokenService,
-		public toastController: ToastController,
-		private loadingController: LoadingController
+		private loading: Loading,
+		private toast: Toast
 	) { }
 
 	ngOnInit() {
@@ -69,33 +70,23 @@ export class PerfilPage implements OnInit {
 		const user: IUser = this.registerForm.value;
 		user.userId = this.currentUser.userId;
 
-		const loading = await this.loadingController.create({
-			message: 'Salvando...',
-			duration: 5000
-		});
 		try {
-			await loading.present();
+			await this.loading.show('Salvando...', 5000);
 
 			await this.userService.editUser(user);
 
-			loading.dismiss();
-
-			const toast = await this.toastController.create({
-				message: 'Usuário Alterado com Sucesso!',
-				duration: 2000,
-				color: 'success'
-			});
-			toast.present();
+			await this.toast.show('Usuário Alterado com Sucesso!', 2000, 'success');
 
 			this.router.navigate(['/home'], { replaceUrl: true });
 		} catch (err) {
-			loading.dismiss();
-			const toast = await this.toastController.create({
-				message: 'Dados Inválidos!',
-				duration: 2000,
-				color: 'danger'
-			});
-			toast.present();
+			let message = 'Dados Inválido!';
+			if(typeof err?.error?.data === 'string') {
+				message =  err?.error?.data;
+			}
+
+			await this.toast.show(message, 2000, 'danger');
 		}
+
+		await this.loading.hidde();
 	}
 }

@@ -1,9 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { LoadingController, ToastController } from '@ionic/angular';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
 import { ProductService } from 'src/app/services/product.service';
+import { Loading } from 'src/app/utils/loading';
+import { Toast } from 'src/app/utils/toast';
 import { PhotoService } from '../../services/photo.service';
 
 @Component({
@@ -58,8 +59,8 @@ export class PhotoPage implements OnDestroy {
 		public photoService: PhotoService,
 		private formBuilder: FormBuilder,
 		private productService: ProductService,
-		private toastController: ToastController,
-		private loadingController: LoadingController
+		private loading: Loading,
+		private toast: Toast
 	) {}
 
 	public addPhoto(): void {
@@ -73,34 +74,24 @@ export class PhotoPage implements OnDestroy {
 		};
 
 		try {
-
-			const loading = await this.loadingController.create({
-				message: 'Salvando...',
-				duration: 30000
-			});
-			await loading.present();
+			await this.loading.show('Salvando...', 30000);
 
 			await this.productService.addProduct(product);
-
-			loading.dismiss();
 
 			// Limpar dados do form e da imagem
 			this.clearAllData();
 
-			const toast = await this.toastController.create({
-				message: 'Usuário Cadastrado com Sucesso!',
-				duration: 3000,
-				color: 'success'
-			});
-			toast.present();
-		} catch (error) {
-			const toast = await this.toastController.create({
-				message: 'Dados Inválidos!',
-				duration: 2000,
-				color: 'danger'
-			});
-			toast.present();
+			await this.toast.show('Produto Cadastrado com Sucesso!', 3000, 'success');
+		} catch (err) {
+			let message = 'Dados Inválido!';
+			if(typeof err?.error?.data === 'string') {
+				message =  err?.error?.data;
+			}
+
+			await this.toast.show(message, 2000, 'danger');
 		}
+
+		await this.loading.hidde();
 	}
 
 	ngOnDestroy(): void {
