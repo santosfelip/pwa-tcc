@@ -9,6 +9,7 @@
 	"dev": "ng serve",
     "postinstall": "ng build --aot --configuration production",
     "deploy:heroku": "git push heroku master",
+    "deploy:v1": "git push heroku v1:master",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

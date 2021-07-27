@@ -57,6 +57,7 @@ export class ProductService {
 
 		try {
 			const coords = await GeoLocation.getCurrentLocation();
+			//TODO: Adicionar por CEP
 			const endpoint: string = `${API.v1}/products/${coords.latitude}/${coords.longitude}`;
 
 			const headers: HttpHeaders = new HttpHeaders({

@@ -5,7 +5,8 @@ import { AuthService } from 'src/app/auth/guards/auth.service';
 
 @Component({
   selector: 'app-menu-lateral',
-  templateUrl: './menu-lateral.component.html'
+  templateUrl: './menu-lateral.component.html',
+  styleUrls: ['./menu-lateral.component.scss']
 })
 export class MenuLateralComponent {
 	constructor(

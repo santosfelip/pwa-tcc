@@ -3,5 +3,5 @@ export const environment = {
 };
 
 export const API = {
-	v1: 'https://safe-headland-61171.herokuapp.com/app/v1'
+	v1: 'http://localhost:9000/app/v1'
 };

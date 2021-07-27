@@ -15,6 +15,7 @@ export class FormComponent {
 	@Input() formGroup: FormGroup;
 	@Input() formFields: Array<FormField>;
 	@Input() formButtons: Array<FormButton>;
+	public teste;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document){}
@@ -30,6 +31,13 @@ export class FormComponent {
 				types: ['establishment'],
 			};
 			const autocomplete = new google.maps.places.Autocomplete(input, options);
+
+			autocomplete.addListener('place_changed', () => {
+				this.formGroup.setValue({
+					...this.formGroup.value,
+					marketName: autocomplete.getPlace().name
+				});
+			});
 		}
 	}
 }

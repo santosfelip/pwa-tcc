@@ -22,7 +22,7 @@ export class HomePage {
 		try {
 			await this.loading.show('Buscando Produtos no raio de 5km...', 30000);
 
-			this.productsList = await this.productService.getAllProducts();
+			// this.productsList = await this.productService.getAllProducts();
 		} catch (err) {
 			console.log(err);
 		}
@@ -30,7 +30,7 @@ export class HomePage {
 		await this.loading.hidde();
 	}
 
-	public redirectToTakePhoto(): void {
-		this.router.navigate(['/photo'], { replaceUrl: true });
+	public redirectToAddProduct(): void {
+		this.router.navigate(['/addProduct'], { replaceUrl: true });
 	}
 }

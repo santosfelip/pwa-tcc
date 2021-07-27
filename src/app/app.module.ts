@@ -16,7 +16,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { LoginPage } from './auth/login/login.page';
 import { ProdutosListaComponent } from './components/produtos-lista/produtos-lista.component';
 import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
-import { PhotoPage } from './pages/photo/photo.page';
+import { AddProductPage } from './pages/add-product/add-product.page';
 import { PerfilPage } from './pages/perfil/perfil.page.component';
 import { FormComponent } from './components/form/form.component';
 import { AuthGuardService } from './auth/guards/auth-guard.service';
@@ -30,7 +30,7 @@ import { ProductPage } from './pages/product/product.page';
 		ProdutoComponent,
 		HomePage,
 		ProductPage,
-		PhotoPage,
+		AddProductPage,
 		PerfilPage,
 		CadastroPage,
 		HeaderComponent,

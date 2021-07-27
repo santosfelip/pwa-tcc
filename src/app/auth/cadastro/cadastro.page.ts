@@ -60,7 +60,10 @@ export class CadastroPage {
 	}
 
 	public async signUp(): Promise<void> {
-		const newUser = this.registerForm.value;
+		const newUser = {
+			...this.registerForm.value,
+			email: this.registerForm.value.email.trim()
+		};
 
 		try {
 			await this.loading.show('Salvando...', 5000);
@@ -69,7 +72,21 @@ export class CadastroPage {
 
 			await this.toast.show('Usuário Cadastrado com Sucesso!', 3000);
 
-			this.redirectToLogin();
+			await this.loading.hidde();
+			await this.signIn(this.registerForm.value);
+		} catch (err) {
+			await this.toast.show(err.message, 2000, 'danger');
+		}
+
+		await this.loading.hidde();
+	}
+
+	public async signIn({ email, password }): Promise<void> {
+		try {
+			await this.loading.show('Carregando...', 5000);
+			await this.authService.signIn(email.trim(), password);
+
+			this.router.navigate(['/home'], { replaceUrl: true });
 		} catch (err) {
 			await this.toast.show(err.message, 2000, 'danger');
 		}

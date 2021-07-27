@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginPage } from './auth/login/login.page';
 import { HomePage } from './pages/home/home.page';
 import { CadastroPage } from './auth/cadastro/cadastro.page';
-import { PhotoPage } from './pages/photo/photo.page';
+import { AddProductPage } from './pages/add-product/add-product.page';
 import { PerfilPage } from './pages/perfil/perfil.page.component';
 import { AuthGuardService } from './auth/guards/auth-guard.service';
 import { ProductPage } from './pages/product/product.page';
@@ -29,8 +29,8 @@ const routes: Routes = [
 		canActivate: [AuthGuardService]
 	},
 	{
-		path: 'photo',
-		component: PhotoPage,
+		path: 'addProduct',
+		component: AddProductPage,
 		canActivate: [AuthGuardService]
 	},
 	{

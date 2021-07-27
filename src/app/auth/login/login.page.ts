@@ -62,7 +62,7 @@ export class LoginPage {
 		try {
 			await this.loading.default();
 
-			await this.authService.signIn(email, password);
+			await this.authService.signIn(email.trim(), password);
 
 			this.router.navigate(['/home'], { replaceUrl: true });
 		} catch (err) {
