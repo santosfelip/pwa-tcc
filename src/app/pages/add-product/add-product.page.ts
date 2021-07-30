@@ -66,7 +66,7 @@ export class AddProductPage {
 		try {
 			await this.loading.show('Salvando...', 30000);
 			console.log(this.productForm.value);
-			// await this.productService.addProduct(this.productForm.value);
+			await this.productService.addProduct(this.productForm.value);
 
 			// Limpar dados do form e da imagem
 			this.clearAllData();

@@ -7,6 +7,7 @@ import { IUser } from '../interfaces/user.interface';
   providedIn: 'root'
 })
 export class AuthTokenService {
+	private token: string;
 
 	public decodePayloadJWT(): IUser | null {
 		try {
@@ -23,10 +24,10 @@ export class AuthTokenService {
 	}
 
 	public saveToken(token: string): void {
-		localStorage.setItem('token', token);
+		this.token = token;
 	}
 
 	public getToken(): string {
-		return localStorage.getItem('token');
+		return this.token;
 	}
 }

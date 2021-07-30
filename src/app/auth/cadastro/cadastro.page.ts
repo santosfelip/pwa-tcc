@@ -42,7 +42,7 @@ export class CadastroPage {
 			onClick: () => this.signUp()
 		},
 		{
-			label: 'Entre',
+			label: 'Voltar',
 			onClick: () => this.redirectToLogin()
 		}
 	];

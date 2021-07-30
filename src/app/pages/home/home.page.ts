@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { Loading } from 'src/app/utils/loading';
 import { IProduct } from 'src/app/services/product.service';
+import { Toast } from 'src/app/utils/toast';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -15,16 +16,17 @@ export class HomePage {
 	constructor(
 		private router: Router,
 		private productService: ProductService,
-		private loading: Loading
+		private loading: Loading,
+		private toast: Toast
 	) { }
 
 	async ionViewWillEnter() {
 		try {
-			await this.loading.show('Buscando Produtos no raio de 5km...', 30000);
+			await this.loading.show('Buscando Produtos em sua Cidade...', 50000);
 
-			// this.productsList = await this.productService.getAllProducts();
+			this.productsList = await this.productService.getAllProducts();
 		} catch (err) {
-			console.log(err);
+			this.toast.show('Não foi possível obter a sua localização!', 2000, 'danger');
 		}
 
 		await this.loading.hidde();

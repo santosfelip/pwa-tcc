@@ -3,6 +3,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { Loading } from 'src/app/utils/loading';
 import { IProduct } from 'src/app/services/product.service';
 import { Router } from '@angular/router';
+import { Toast } from 'src/app/utils/toast';
 
 @Component({
   selector: 'app-product',
@@ -15,7 +16,8 @@ export class ProductPage {
 	constructor(
 		private productService: ProductService,
 		private loading: Loading,
-		private router: Router
+		private router: Router,
+		private toast: Toast
 	) { }
 
 	async ionViewWillEnter() {
@@ -23,13 +25,13 @@ export class ProductPage {
 			await this.loading.default();
 			this.productsList = await this.productService.getProductById();
 		} catch (err) {
-			console.log(err);
+			this.toast.show('Erro ao buscar seus produtos', 2000, 'danger');
 		}
 
 		await this.loading.hidde();
 	}
 
-	public redirectToTakePhoto(): void {
-		this.router.navigate(['/photo'], { replaceUrl: true });
+	public addProduct(): void {
+		this.router.navigate(['/addProduct'], { replaceUrl: true });
 	}
 }

@@ -1,18 +1,20 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API } from 'src/environments/environment';
-import { GeoLocation } from '../libraries/geoLocation';
+import { Location, ILocation } from '../libraries/Location';
 import { AuthTokenService } from './auth-token.service';
+import { UserService } from './user.service';
 
 export interface IProduct {
 	title: string;
-	market_name: string;
+	marketName: string;
 	price: number;
 	isPromotional: boolean;
 	image: string;
+	brandName: string;
 	distance?: string;
 	uid?: string;
-}
+};
 
 @Injectable({
 	providedIn: 'root'
@@ -20,7 +22,8 @@ export interface IProduct {
 export class ProductService {
 	constructor(
 		private httpClient: HttpClient,
-		private authTokenService: AuthTokenService
+		private authTokenService: AuthTokenService,
+		private userService: UserService
 	){}
 
 	public async addProduct(product: IProduct): Promise<void> {
@@ -28,19 +31,12 @@ export class ProductService {
 		const token: string = this.authTokenService.getToken();
 
 		try {
-			const coords = await GeoLocation.getCurrentLocation();
-
-			if(!coords) {
-				throw new Error('Não foi possível encontrar a sua localização!');
-			};
+			const locationUser: ILocation | null = await Location.getLocationInfo();
 
 			const productToSave = {
 				...product,
-				uid: this.authTokenService.decodePayloadJWT().userId,
-				location: {
-					latitude: coords.latitude,
-					longitude: coords.longitude
-				}
+				...locationUser,
+				uid: this.authTokenService.decodePayloadJWT().userId
 			};
 
 			const headers: HttpHeaders = new HttpHeaders({
@@ -48,17 +44,16 @@ export class ProductService {
             });
 			await this.httpClient.post(endpoint, productToSave, { headers }).toPromise();
 		} catch (error) {
-			throw new Error('Erro');
+			throw new Error('Erro ao Salvar os Produtos');
 		}
 	}
 
 	public async getAllProducts(): Promise<any> {
 		const token: string = this.authTokenService.getToken();
+		const { userId } = this.userService.currentUser;
 
 		try {
-			const coords = await GeoLocation.getCurrentLocation();
-			//TODO: Adicionar por CEP
-			const endpoint: string = `${API.v1}/products/${coords.latitude}/${coords.longitude}`;
+			const endpoint: string = `${API.v1}/products/${userId}`;
 
 			const headers: HttpHeaders = new HttpHeaders({
                 authorization: `Bearer ${token}`
@@ -66,7 +61,7 @@ export class ProductService {
 
 			return await this.httpClient.get(endpoint, { headers }).toPromise();
 		} catch (error) {
-			console.log(error);
+			throw new Error('Erro ao buscar os produtos!');
 		}
 	}
 

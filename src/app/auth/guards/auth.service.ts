@@ -3,25 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { API } from 'src/environments/environment';
 import { AuthTokenService } from 'src/app/services/auth-token.service';
 import { IUser } from 'src/app/interfaces/user.interface';
+import { UserService } from 'src/app/services/user.service';
+import { Location, ILocation } from 'src/app/libraries/Location';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
-    private currentUserAuthenticated: IUser | null;
-
 	constructor(
 		private httpClient: HttpClient,
-		private authTokenService: AuthTokenService
-		) {}
+		private authTokenService: AuthTokenService,
+		private userService: UserService
+	) {}
 
 	public isAuthenticated(): IUser | null {
-        return this.currentUserAuthenticated;
+        return this.userService.currentUser;
     }
 
 	public logout(): void {
-		this.currentUserAuthenticated = null;
+		this.userService.currentUser = null;
 		this.authTokenService.saveToken('');
 	}
 
@@ -29,7 +30,14 @@ export class AuthService {
 		const endpoint: string = `${API.v1}/user/register`;
 
 		try {
-			await this.httpClient.post(endpoint, newUser).toPromise();
+			const locationUser: ILocation | null = await Location.getLocationInfo();
+
+			const userToSave = {
+				...locationUser,
+				...newUser
+			};
+
+			await this.httpClient.post(endpoint, userToSave).toPromise();
 		} catch (err) {
 			let message = 'Dados Inválido!';
 			if(typeof err?.error?.data === 'string') {
@@ -49,18 +57,19 @@ export class AuthService {
 
 		try {
 			const response: IToken = await this.httpClient.post(endpoint, user).toPromise() as IToken;
-			// Salva o token no Local Storage
+
+			// Atualiza a Localização do usuário no BD
+			this.userService.saveLocation();
+
+			// Salva o token
 			this.authTokenService.saveToken(response.accessToken);
-			this.saveCurrentUser();
+
+			// Salva os Dados do Usuário
+			this.userService.currentUser = this.authTokenService.decodePayloadJWT();
 		} catch (err) {
 			throw Error('Email ou Senha Inválidos!');
 		}
     }
-
-	private saveCurrentUser(): void {
-		this.currentUserAuthenticated = this.authTokenService.decodePayloadJWT();
-	}
-
 }
 
 interface IToken {

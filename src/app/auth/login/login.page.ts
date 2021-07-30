@@ -7,6 +7,7 @@ import { AuthService } from '../guards/auth.service';
 import { Loading } from 'src/app/utils/loading';
 import { DOCUMENT } from '@angular/common';
 import { Toast } from 'src/app/utils/toast';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html'
@@ -49,7 +50,7 @@ export class LoginPage {
 		private toast: Toast,
 		@Inject(DOCUMENT) private document: Document
 	) {
-		this.document.addEventListener('keydown', (event) => {
+		this.document.addEventListener('keydown', (event: any) => {
 			if(event.key === 'Enter') {
 				this.signIn();
 			}
@@ -75,5 +76,4 @@ export class LoginPage {
 	public redirectToRegister(): void {
 		this.router.navigate(['/cadastro'], { replaceUrl: true });
 	}
-
 }

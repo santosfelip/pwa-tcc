@@ -46,8 +46,6 @@ export class PerfilPage implements OnInit {
 		}
 	];
 
-	private currentUser: IUser;
-
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router,
@@ -58,17 +56,16 @@ export class PerfilPage implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.currentUser = this.tokenService.decodePayloadJWT();
 		this.registerForm.setValue({
-			name: this.currentUser.name,
-			email: this.currentUser.email,
+			name: this.userService.currentUser.name,
+			email: this.userService.currentUser.email,
 			password: ''
 		});
 	}
 
 	public async editUser(): Promise<void> {
 		const user: IUser = this.registerForm.value;
-		user.userId = this.currentUser.userId;
+		user.userId = this.userService.currentUser.userId;
 
 		try {
 			await this.loading.show('Salvando...', 5000);
