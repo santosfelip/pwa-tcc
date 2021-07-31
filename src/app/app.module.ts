@@ -23,11 +23,13 @@ import { AuthGuardService } from './auth/guards/auth-guard.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProdutoComponent } from './components/produtos-lista/produto/produto.component';
 import { ProductPage } from './pages/product/product.page';
+import { CategoriesComponent } from './components/categories/categories.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		ProdutoComponent,
+		CategoriesComponent,
 		HomePage,
 		ProductPage,
 		AddProductPage,

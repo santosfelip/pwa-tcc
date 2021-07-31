@@ -1,0 +1,13 @@
+<div>
+	<div class="horizontal-scroll">
+		<ion-chip
+			*ngFor="let categorie of categoriesList; let i = index"
+			[color]="categorie?.color"
+			[outline]="categorie?.outline"
+			(click)="click(i)"
+		>
+			<ion-label>{{ categorie.label }}</ion-label>
+			<ion-icon *ngIf="categorie?.icon" name="close-circle"></ion-icon>
+		</ion-chip>
+	</div>
+</div>

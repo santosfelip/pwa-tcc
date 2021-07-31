@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API } from 'src/environments/environment';
 import { Location, ILocation } from '../libraries/Location';
@@ -57,6 +57,18 @@ export class ProductService {
 	public async getAllProducts(): Promise<any> {
 		const { uid } = this.storage.getItemData('userData');
 		const endpoint: string = `${API.v1}/products/${uid}`;
+
+		try {
+
+			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
+		} catch (error) {
+			throw new Error('Erro ao buscar os produtos!');
+		}
+	}
+
+	public async getRecommendations(): Promise<any> {
+		const { uid } = this.storage.getItemData('userData');
+		const endpoint: string = `${API.v1}/recommendations/${uid}`;
 
 		try {
 
