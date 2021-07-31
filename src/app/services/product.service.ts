@@ -7,6 +7,8 @@ import { LocalStorage } from './localStorage.service';
 import { UserService } from './user.service';
 
 export interface IProduct {
+	productId: string;
+	likes: number;
 	title: string;
 	marketName: string;
 	price: number;
