@@ -5,6 +5,7 @@ import { AuthTokenService } from 'src/app/services/auth-token.service';
 import { IUser } from 'src/app/interfaces/user.interface';
 import { UserService } from 'src/app/services/user.service';
 import { Location, ILocation } from 'src/app/libraries/Location';
+import { LocalStorage } from 'src/app/services/localStorage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,16 +15,17 @@ export class AuthService {
 	constructor(
 		private httpClient: HttpClient,
 		private authTokenService: AuthTokenService,
-		private userService: UserService
+		private userService: UserService,
+		private tokenService: AuthTokenService,
+		private storage: LocalStorage
 	) {}
 
-	public isAuthenticated(): IUser | null {
-        return this.userService.currentUser;
+	public isAuthenticated(): string | undefined {
+        return this.tokenService.getToken();
     }
 
 	public logout(): void {
-		this.userService.currentUser = null;
-		this.authTokenService.saveToken('');
+		this.storage.clearAll();
 	}
 
 	public async signUp(newUser: IUser): Promise<void> {
@@ -59,13 +61,13 @@ export class AuthService {
 			const response: IToken = await this.httpClient.post(endpoint, user).toPromise() as IToken;
 
 			// Atualiza a Localização do usuário no BD
-			this.userService.saveLocation();
+			this.userService.updateLocationUser();
 
 			// Salva o token
 			this.authTokenService.saveToken(response.accessToken);
 
 			// Salva os Dados do Usuário
-			this.userService.currentUser = this.authTokenService.decodePayloadJWT();
+			this.userService.saveCurrentUser(this.authTokenService.decodePayloadJWT());
 		} catch (err) {
 			throw Error('Email ou Senha Inválidos!');
 		}

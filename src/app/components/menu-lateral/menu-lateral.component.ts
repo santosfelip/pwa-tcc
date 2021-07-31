@@ -16,7 +16,7 @@ export class MenuLateralComponent {
 	) {}
 
 	public changeNavigation(route: string): void {
-		if(this.router.url === '/login') {
+		if(route === '/login') {
 			this.authService.logout();
 		}
 

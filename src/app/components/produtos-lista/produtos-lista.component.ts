@@ -10,5 +10,4 @@ export class ProdutosListaComponent {
 
 	@Input() productsList: Array<IProduct>;
 	@Input() showDistance: boolean;
-
 }

@@ -57,15 +57,15 @@ export class PerfilPage implements OnInit {
 
 	ngOnInit() {
 		this.registerForm.setValue({
-			name: this.userService.currentUser.name,
-			email: this.userService.currentUser.email,
+			name: this.userService.getCurrentUser().name,
+			email: this.userService.getCurrentUser().email,
 			password: ''
 		});
 	}
 
 	public async editUser(): Promise<void> {
-		const user: IUser = this.registerForm.value;
-		user.userId = this.userService.currentUser.userId;
+		const user: any = this.registerForm.value;
+		user.uid = this.userService.getCurrentUser().uid;
 
 		try {
 			await this.loading.show('Salvando...', 5000);

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { API } from 'src/environments/environment';
 import { Location, ILocation } from '../libraries/Location';
 import { AuthTokenService } from './auth-token.service';
+import { LocalStorage } from './localStorage.service';
 import { UserService } from './user.service';
 
 export interface IProduct {
@@ -14,69 +15,70 @@ export interface IProduct {
 	brandName: string;
 	distance?: string;
 	uid?: string;
+	latitude?: number;
+	longitude?: number;
 };
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ProductService {
+
+	public currentLocation: any;
+
 	constructor(
 		private httpClient: HttpClient,
 		private authTokenService: AuthTokenService,
-		private userService: UserService
+		private userService: UserService,
+		private storage: LocalStorage
 	){}
 
 	public async addProduct(product: IProduct): Promise<void> {
 		const endpoint: string = `${API.v1}/product`;
-		const token: string = this.authTokenService.getToken();
 
 		try {
-			const locationUser: ILocation | null = await Location.getLocationInfo();
-
+			const currentUser = this.userService.getCurrentUser();
 			const productToSave = {
 				...product,
-				...locationUser,
-				uid: this.authTokenService.decodePayloadJWT().userId
+				...this.currentLocation,
+				stateCode: currentUser.stateCode,
+				city: currentUser.city,
+				uid: this.authTokenService.decodePayloadJWT().uid
 			};
 
-			const headers: HttpHeaders = new HttpHeaders({
-                authorization: `Bearer ${token}`
-            });
-			await this.httpClient.post(endpoint, productToSave, { headers }).toPromise();
+			await this.httpClient.post(endpoint, productToSave, { headers: this.getHeader() }).toPromise();
 		} catch (error) {
 			throw new Error('Erro ao Salvar os Produtos');
 		}
 	}
 
 	public async getAllProducts(): Promise<any> {
-		const token: string = this.authTokenService.getToken();
-		const { userId } = this.userService.currentUser;
+		const { uid } = this.storage.getItemData('userData');
+		const endpoint: string = `${API.v1}/products/${uid}`;
 
 		try {
-			const endpoint: string = `${API.v1}/products/${userId}`;
 
-			const headers: HttpHeaders = new HttpHeaders({
-                authorization: `Bearer ${token}`
-            });
-
-			return await this.httpClient.get(endpoint, { headers }).toPromise();
+			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
 		} catch (error) {
 			throw new Error('Erro ao buscar os produtos!');
 		}
 	}
 
 	public async getProductById(): Promise<any> {
+		const { uid } = this.storage.getItemData('userData');
+		const endpoint: string = `${API.v1}/product/${uid}`;
+
 		try {
-			const { userId } = this.authTokenService.decodePayloadJWT();
-			const endpoint: string = `${API.v1}/product/${userId}`;
 
-			const headers: HttpHeaders = new HttpHeaders({
-                authorization: `Bearer ${this.authTokenService.getToken()}`
-            });
-
-			return await this.httpClient.get(endpoint, { headers }).toPromise();
+			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
 		} catch (error) {
-			console.log(error);
+			throw new Error('Erro ao buscar os produtos!');
 		}
+	}
+
+	private getHeader(): HttpHeaders {
+		return new HttpHeaders({
+            authorization: `Bearer ${this.authTokenService.getToken()}`
+        });
 	}
 }

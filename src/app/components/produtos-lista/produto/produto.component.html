@@ -1,11 +1,14 @@
 <ion-card class="classCss">
 	<ion-card-header>
-		<ion-card-subtitle>{{marketName}}</ion-card-subtitle>
+		<ion-card-subtitle><a [href]="urlToMaps" target="_blank">{{marketName}}</a></ion-card-subtitle>
 	  	<ion-card-title>{{productName}} - R$ {{price}}</ion-card-title>
-		<ion-card-subtitle *ngIf="isPromotional">Foto tirada em perído promocional</ion-card-subtitle>
+		<ion-card-subtitle *ngIf="isPromotional">Produto registrado em perído promocional</ion-card-subtitle>
 	</ion-card-header>
 	<ion-card-content *ngIf="showDistance">
-		<ion-icon name="cart"></ion-icon>
-		<p> {{distance}} metros de distância</p>
+		<p> {{distance}} Km de distância</p>
+		<ion-row>
+			<ion-icon name="thumbs-up-sharp" [color]="isLike ? 'primary' : 'ligth'" (click)="changeIcon()"></ion-icon>
+			<ion-text [color]="isLike ? 'primary' : 'ligth'">{{numberLikes}} curtidas</ion-text>
+		</ion-row>
 	</ion-card-content>
 </ion-card>

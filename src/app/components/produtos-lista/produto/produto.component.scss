@@ -1,5 +1,6 @@
 ion-icon {
 	font-size: 25px;
+	cursor: pointer;
 }
 
 .not-distance {
@@ -9,16 +10,13 @@ ion-icon {
 	height: 350px;
 }
 
-p {
+ion-text {
 	font-size: 16px;
 	margin-top: 5px;
+	margin-left: 10px;
 }
 
 ion-card-content {
 	display: flex;
-}
-
-#img-content {
-	max-height: 200px;
-	overflow: hidden;
+	flex-direction: column;
 }

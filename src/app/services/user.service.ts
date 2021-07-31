@@ -5,24 +5,23 @@ import { IUser } from '../interfaces/user.interface';
 import { ILocation } from '../libraries/Location';
 import { AuthTokenService } from './auth-token.service';
 import { Location } from '../libraries/Location';
+import { LocalStorage } from './localStorage.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class UserService {
-	public location: ILocation;
-	public currentUser: IUser;
-
 	constructor(
 		private httpClient: HttpClient,
-		private authTokenService: AuthTokenService
+		private authTokenService: AuthTokenService,
+		private storage: LocalStorage
 	){}
 
-	public async editUser(newData: IUser | ILocation): Promise<void> {
+	public async editUser(newData: any): Promise<void> {
 		try {
-			const { userId } = this.currentUser;
+			const { uid } =  this.authTokenService.decodePayloadJWT();
 
-			const endpoint: string = `${API.v1}/user/${userId}`;
+			const endpoint: string = `${API.v1}/user/${uid}`;
 			const token: string = this.authTokenService.getToken();
 
 			const headers: HttpHeaders = new HttpHeaders({
@@ -31,24 +30,28 @@ export class UserService {
 
 			const response: any = await this.httpClient.patch(endpoint, newData, { headers }).toPromise();
 
-			this.currentUser = {
-				userId: response.uid,
-				name: response.name,
-				email: response.email
-			};
+			this.saveCurrentUser(response);
 		} catch (err) {
 			throw Error('Falha na Requisição!');
 		}
 	}
 
-	public async saveLocation(): Promise<void> {
+	public async updateLocationUser(): Promise<void> {
 		try {
 			// Recebe a Localização do usuário
-			this.location = await Location.getLocationInfo();
+			const newLocation = await Location.getLocationInfo();
 
-			await this.editUser(this.location);
+			await this.editUser(newLocation);
 		} catch (error) {
 			throw Error('Falha na Requisição!');
 		}
+	}
+
+	public saveCurrentUser(user): void {
+		this.storage.setItemData('userData', user);
+	}
+
+	public getCurrentUser(): any {
+		return this.storage.getItemData('userData');
 	}
 }

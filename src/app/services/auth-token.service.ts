@@ -1,33 +1,28 @@
 import { Injectable } from '@angular/core';
 import jwt_decode from 'jwt-decode';
 import { IUser } from '../interfaces/user.interface';
+import { LocalStorage } from './localStorage.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthTokenService {
-	private token: string;
+	constructor(private storage: LocalStorage){}
 
-	public decodePayloadJWT(): IUser | null {
+	public decodePayloadJWT(): any {
 		try {
-			const tokenDecoded: any = jwt_decode(this.getToken());
-
-			return {
-				userId: tokenDecoded.id_user,
-				name: tokenDecoded.name,
-				email: tokenDecoded.email
-			};
+			return jwt_decode(this.getToken());
 		} catch (Error) {
 			return null;
 		}
 	}
 
 	public saveToken(token: string): void {
-		this.token = token;
+		this.storage.setItemData('token', token);
 	}
 
 	public getToken(): string {
-		return this.token;
+		return this.storage.getItemData('token');
 	}
 }
