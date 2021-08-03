@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProdutoComponent } from './components/produtos-lista/produto/produto.component';
 import { ProductPage } from './pages/product/product.page';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { SelectStateCityComponent } from './components/select-state-city/select-state-city.component';
 
 @NgModule({
 	declarations: [
@@ -31,6 +32,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 		ProdutoComponent,
 		CategoriesComponent,
 		HomePage,
+		SelectStateCityComponent,
 		ProductPage,
 		AddProductPage,
 		PerfilPage,

@@ -4,7 +4,6 @@ import { API } from 'src/environments/environment';
 import { AuthTokenService } from 'src/app/services/auth-token.service';
 import { IUser } from 'src/app/interfaces/user.interface';
 import { UserService } from 'src/app/services/user.service';
-import { Location, ILocation } from 'src/app/libraries/Location';
 import { LocalStorage } from 'src/app/services/localStorage.service';
 
 @Injectable({
@@ -28,18 +27,11 @@ export class AuthService {
 		this.storage.clearAll();
 	}
 
-	public async signUp(newUser: IUser): Promise<void> {
+	public async signUp(newUser: any): Promise<void> {
 		const endpoint: string = `${API.v1}/user/register`;
 
 		try {
-			const locationUser: ILocation | null = await Location.getLocationInfo();
-
-			const userToSave = {
-				...locationUser,
-				...newUser
-			};
-
-			await this.httpClient.post(endpoint, userToSave).toPromise();
+			await this.httpClient.post(endpoint, newUser).toPromise();
 		} catch (err) {
 			let message = 'Dados Inválido!';
 			if(typeof err?.error?.data === 'string') {
@@ -59,9 +51,6 @@ export class AuthService {
 
 		try {
 			const response: IToken = await this.httpClient.post(endpoint, user).toPromise() as IToken;
-
-			// Atualiza a Localização do usuário no BD
-			this.userService.updateLocationUser();
 
 			// Salva o token
 			this.authTokenService.saveToken(response.accessToken);

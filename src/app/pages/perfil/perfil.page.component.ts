@@ -18,7 +18,9 @@ export class PerfilPage implements OnInit {
 	public registerForm: FormGroup = this.formBuilder.group({
 		name: '',
 		email: '',
-		password: ''
+		password: '',
+		city: '',
+		stateCode: ''
 	});
 
 	public formFields: Array<FormField> = [
@@ -59,7 +61,9 @@ export class PerfilPage implements OnInit {
 		this.registerForm.setValue({
 			name: this.userService.getCurrentUser().name,
 			email: this.userService.getCurrentUser().email,
-			password: ''
+			password: '',
+			city: '',
+			stateCode: ''
 		});
 	}
 

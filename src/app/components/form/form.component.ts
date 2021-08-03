@@ -16,7 +16,7 @@ export class FormComponent {
 	@Input() formGroup: FormGroup;
 	@Input() formFields: Array<FormField>;
 	@Input() formButtons: Array<FormButton>;
-	public teste;
+	@Input() showSelectStateCity: boolean = false;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -24,26 +24,21 @@ export class FormComponent {
 		private productService: ProductService
 	){}
 
+	public saveStateAndCity({ city, stateCode }): void {
+		this.formGroup.setValue({
+			...this.formGroup.value,
+			city,
+			stateCode
+		});
+	}
+
 	// eslint-disable-next-line @angular-eslint/use-lifecycle-interface
 	async ngAfterViewInit(): Promise<void> {
 		const input = this.document.getElementById('autocomplete') as HTMLInputElement;
 		if(input) {
-			// Centraliza a localização em um raio de 10km
-			const center = {
-				latitude: this.userService.getCurrentUser().latitude,
-				longitude: this.userService.getCurrentUser().longitude
-			};
-			const defaultBounds = {
-				north: center.latitude + 0.1,
-				south: center.latitude - 0.1,
-				east: center.longitude + 0.1,
-				west: center.longitude - 0.1,
-			};
-
 			const options = {
-				bounds: defaultBounds,
 				componentRestrictions: { country: 'br' },
-				fields: ['name', 'geometry'],
+				fields: ['name', 'address_components'],
 				strictBounds: false,
 				types: ['establishment'],
 			};
@@ -52,16 +47,10 @@ export class FormComponent {
 			autocomplete.addListener('place_changed', () => {
 				this.formGroup.setValue({
 					...this.formGroup.value,
-					marketName: autocomplete.getPlace().name
+					marketName: autocomplete.getPlace().name,
+					city: autocomplete.getPlace()?.address_components[3].long_name,
+					stateCode: autocomplete.getPlace()?.address_components[4].short_name,
 				});
-
-				const productLocation = {
-					latitude: autocomplete.getPlace()?.geometry?.location?.lat(),
-					longitude: autocomplete.getPlace()?.geometry?.location?.lng(),
-				};
-
-				// Salva a localização do Mercado
-				this.productService.currentLocation = productLocation;
 			});
 		}
 	}

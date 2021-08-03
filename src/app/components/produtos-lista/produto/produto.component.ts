@@ -14,8 +14,6 @@ export class ProdutoComponent implements OnInit{
 	@Input() isPromotional: boolean;
 	@Input() distance: string;
 	@Input() showDistance: boolean;
-	@Input() latitude: number;
-	@Input() longitude: number;
 	@Input() productId: string;
 	@Input() numberLikes: number;
 

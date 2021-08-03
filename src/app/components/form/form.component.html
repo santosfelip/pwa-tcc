@@ -34,6 +34,11 @@
 						></ion-checkbox>
 					</ion-item>
 
+					<app-select-state-city
+						*ngIf="showSelectStateCity"
+						(setValues)="saveStateAndCity($event)"
+					></app-select-state-city>
+
 					<ion-button
 						*ngFor="let button of formButtons"
 						(click)="button.onClick()"

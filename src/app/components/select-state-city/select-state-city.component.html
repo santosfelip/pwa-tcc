@@ -1,0 +1,46 @@
+
+<ion-item
+	lines="none"
+	color="light"
+	class="ion-no-inner-padding-end ion-margin"
+>
+    <ion-select
+		interface="popover"
+		[(ngModel)]="stateSelected"
+		(ionChange)="setCities()"
+		placeholder="Selecione o Estado"
+		required
+	>
+		<ion-select-option
+			*ngFor="let state of states; let i = index;"
+			[value]="i"
+		>
+			{{state.nome}}
+		</ion-select-option>
+    </ion-select>
+</ion-item>
+
+<ion-item
+	lines="none"
+	color="light"
+	class="ion-no-inner-padding-end ion-margin"
+	required
+>
+	<ion-select
+		interface="popover"
+		[(ngModel)]="citySelected"
+		(ionChange)="handleChange()"
+		placeholder="Selecione a Cidade"
+		required
+	>
+		<ion-select-option
+			*ngFor="let city of cities; let i = index;"
+			[value]="city"
+		>
+			{{city}}
+		</ion-select-option>
+
+		<ion-select-option *ngIf="!cities.length" disabled>Selecione um estado</ion-select-option>
+    </ion-select>
+</ion-item>
+

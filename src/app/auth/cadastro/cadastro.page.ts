@@ -15,7 +15,9 @@ export class CadastroPage {
 	public registerForm: FormGroup = this.formBuilder.group({
 		name: '',
 		email: '',
-		password: ''
+		password: '',
+		city: '',
+		stateCode: ''
 	});
 
 	public formFields: Array<FormField> = [
@@ -66,6 +68,10 @@ export class CadastroPage {
 		};
 
 		try {
+			if(!this.isValidUser(newUser)) {
+				throw Error('Preencha todos os Campos!');
+			}
+
 			await this.loading.show('Salvando...', 5000);
 
 			await this.authService.signUp(newUser);
@@ -92,5 +98,14 @@ export class CadastroPage {
 		}
 
 		await this.loading.hidde();
+	}
+
+	private isValidUser(user): boolean {
+		for (const fieldName of Object.keys(user)) {
+			if(user[fieldName] === '') {
+				return false;
+			}
+		}
+		return true;
 	}
 }

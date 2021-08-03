@@ -17,7 +17,9 @@ export class AddProductPage {
 		marketName: '',
 		price: '',
 		brand: '',
-		isPromotional: false
+		isPromotional: false,
+		city: '',
+		stateCode: ''
 	});
 
 	public formFields: Array<FormField> = [
@@ -90,7 +92,9 @@ export class AddProductPage {
 			marketName: '',
 			price: '',
 			brand: '',
-			isPromotional: false
+			isPromotional: false,
+			city: '',
+			stateCode: ''
 		});
 	}
 }
