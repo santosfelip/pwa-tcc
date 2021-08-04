@@ -16,10 +16,10 @@ export class ProdutoComponent implements OnInit{
 	@Input() showDistance: boolean;
 	@Input() productId: string;
 	@Input() numberLikes: number;
+	@Input() isLiked: boolean;
 
 	public classCss: string;
 	public urlToMaps: string;
-	public isLike: boolean = false;
 
 	constructor(private eventService: EventService){}
 
@@ -31,13 +31,13 @@ export class ProdutoComponent implements OnInit{
 	}
 
 	public async changeIcon(): Promise<void> {
-		this.isLike = !this.isLike;
+		this.isLiked = !this.isLiked;
 
-		this.numberLikes = this.isLike ?
+		this.numberLikes = this.isLiked ?
 			++this.numberLikes : --this.numberLikes;
 
 		const newEvent = {
-			action: this.isLike ? 'likes' : 'dislikes',
+			action: this.isLiked ? 'likes' : 'dislikes',
 			thing: this.productId
 		};
 

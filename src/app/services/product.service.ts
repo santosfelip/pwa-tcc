@@ -42,6 +42,7 @@ export class ProductService {
 			}
 			const productToSave = {
 				...product,
+				category: product?.category.trim(),
 				uid: this.authTokenService.decodePayloadJWT().uid
 			};
 
@@ -52,12 +53,19 @@ export class ProductService {
 	}
 
 	public async getAllProducts(): Promise<any> {
+		let params = new HttpParams();
+		//TODO: Passar as categorias dinamicamente para a API
+		['alimentos', 'higiene', 'bebidas', 'produtos recomendados'].forEach((category: string) =>{
+			params = params.append(`categories[]`, category);
+		});
+
+
 		const { uid } = this.storage.getItemData('userData');
 		const endpoint: string = `${API.v1}/products/${uid}`;
 
 		try {
 
-			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
+			return await this.httpClient.get(endpoint, { headers: this.getHeader(), params }).toPromise();
 		} catch (error) {
 			throw new Error('Erro ao buscar os produtos!');
 		}

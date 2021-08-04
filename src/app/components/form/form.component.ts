@@ -3,8 +3,6 @@ import { Component, Inject, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
-import { ProductService } from 'src/app/services/product.service';
-import { UserService } from 'src/app/services/user.service';
 
 declare const google;
 @Component({
@@ -19,9 +17,7 @@ export class FormComponent {
 	@Input() showSelectStateCity: boolean = false;
 
 	constructor(
-		@Inject(DOCUMENT) private document: Document,
-		private userService: UserService,
-		private productService: ProductService
+		@Inject(DOCUMENT) private document: Document
 	){}
 
 	public saveStateAndCity({ city, stateCode }): void {

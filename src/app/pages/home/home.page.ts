@@ -4,6 +4,9 @@ import { ProductService } from 'src/app/services/product.service';
 import { Loading } from 'src/app/utils/loading';
 import { IProduct } from 'src/app/services/product.service';
 import { Toast } from 'src/app/utils/toast';
+import { EventService } from 'src/app/services/event.service';
+import categories from '../../utils/categories.json';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -12,39 +15,24 @@ import { Toast } from 'src/app/utils/toast';
 export class HomePage {
 	public productsList: Array<IProduct>;
 	public showDistance: boolean = true;
-	public categoriesList = [
-		{
-			outiline: true,
-			color: 'primary',
-			label: 'Produtos Recomendados'
-		},
-		{
-			outiline: true,
-			color: 'primary',
-			label: 'Categoria 2'
-		},
-		{
-			outiline: true,
-			color: 'primary',
-			label: 'Categoria 3'
-		},
-		{
-			outiline: true,
-			color: 'primary',
-			label: 'Categoria 4'
-		}
-	];
+	public arrayLikes: Array<string>;
+	public categoriesList = categories.categoriesChip.map((category) => ({
+		outiline: true,
+		color: 'primary',
+		label: category
+	}));
 
 	public categoriesListClicked = [];
 	constructor(
 		private router: Router,
 		private productService: ProductService,
+		private eventService: EventService,
 		private loading: Loading,
 		private toast: Toast
 	) { }
 
 	async ionViewWillEnter() {
-		await this.getProducts('Buscando Produtos em sua Cidade...');
+		await this.getProducts();
 	}
 
 	public redirectToAddProduct(): void {
@@ -70,20 +58,40 @@ export class HomePage {
 
 	public async removeCategorie(id: number): Promise<void> {
 		if(this.categoriesListClicked[id].id === 0) {
-			this.productsList = await this.productService.getAllProducts();
+			this.getProducts();
 		}
 		this.categoriesListClicked.splice(id, 1);
 	}
 
-	private async getProducts(messageLoad: string): Promise<void> {
+	private async getProducts(): Promise<void> {
 		try {
-			await this.loading.show(messageLoad, 50000);
+			await this.loading.show('Buscando Produtos em sua Cidade...', 50000);
+			await this.getLikes();
 
-			this.productsList = await this.productService.getAllProducts();
+			const response = await this.productService.getAllProducts();
+			this.productsList = this.isLiked(response);
 		} catch (err) {
-			this.toast.show('Não foi possível obter a sua localização!', 2000, 'danger');
+			this.toast.show('Não foi possível localizar os Produtos!', 2000, 'danger');
 		}
 
 		await this.loading.hidde();
+	}
+
+	private isLiked(productsData) {
+		return productsData.map((product) => {
+			const isLiked = this.arrayLikes.includes(product.productId);
+			return {
+				...product,
+				isLiked
+			};
+		});
+	}
+
+	private async getLikes(): Promise<any> {
+		try {
+			this.arrayLikes = await this.eventService.getLikes();
+		} catch (error) {
+			this.toast.show('Não foi possível obter a sua localização!', 2000, 'danger');
+		}
 	}
 }

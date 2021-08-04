@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API } from 'src/environments/environment';
 import { AuthTokenService } from './auth-token.service';
@@ -22,6 +22,17 @@ export class EventService {
 			await this.httpClient.post(endpoint, newEvent, { headers: this.getHeader() }).toPromise();
 		} catch (error) {
 			throw new Error('Erro ao salvar Evento!');
+		}
+	}
+
+	public async getLikes(): Promise<any> {
+		try {
+			const { uid } = this.authTokenService.decodePayloadJWT();
+			const endpoint = `${API.v1}/likes/${uid}`;
+
+			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
+		} catch (error) {
+			throw new Error('Falha na requisição');
 		}
 	}
 

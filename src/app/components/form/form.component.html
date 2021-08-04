@@ -10,7 +10,8 @@
 						class="ion-no-inner-padding-end ion-margin"
 					>
 						<ion-input
-							*ngIf="field.type !== 'autocompleteMaps' && field.type !== 'checkbox'"
+							*ngIf="field.type === 'text'
+							|| field.type === 'password' || field.type === 'number'"
 							[type]="field.type"
 							[placeholder]="field.placeholder"
 							[formControlName]="field.formControlName"
@@ -23,6 +24,18 @@
 							[formControlName]="field.formControlName"
 							[placeholder]="field.placeholder"
 						>
+
+						<ion-select
+							*ngIf="field.type === 'select'"
+							interface="popover"
+							[formControlName]="field.formControlName"
+							[placeholder]="field.placeholder"
+							required
+						>
+							<ion-select-option *ngFor="let option of field.options">
+								{{option}}
+							</ion-select-option>
+    					</ion-select>
 
 						<ion-label>{{field?.label}}</ion-label>
 						<ion-checkbox

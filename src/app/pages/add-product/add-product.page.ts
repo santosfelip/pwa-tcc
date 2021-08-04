@@ -5,6 +5,7 @@ import { FormField } from 'src/app/interfaces/form-field.interface';
 import { ProductService } from 'src/app/services/product.service';
 import { Loading } from 'src/app/utils/loading';
 import { Toast } from 'src/app/utils/toast';
+import categories from '../../utils/categories.json';
 
 @Component({
   selector: 'app-phot',
@@ -19,7 +20,8 @@ export class AddProductPage {
 		brand: '',
 		isPromotional: false,
 		city: '',
-		stateCode: ''
+		stateCode: '',
+		category: ''
 	});
 
 	public formFields: Array<FormField> = [
@@ -32,6 +34,12 @@ export class AddProductPage {
 			type: 'text',
 			placeholder: 'Marca',
 			formControlName: 'brand'
+		},
+		{
+			type: 'select',
+			placeholder: 'Categoria',
+			formControlName: 'category',
+			options: categories.categoriesSelect
 		},
 		{
 			type: 'autocompleteMaps',
@@ -70,7 +78,7 @@ export class AddProductPage {
 
 			await this.productService.addProduct(this.productForm.value);
 
-			// Limpar dados do form e da imagem
+			// Limpar dados do Form
 			this.clearAllData();
 
 			await this.toast.show('Produto Cadastrado com Sucesso!', 3000, 'success');
@@ -94,7 +102,8 @@ export class AddProductPage {
 			brand: '',
 			isPromotional: false,
 			city: '',
-			stateCode: ''
+			stateCode: '',
+			category: ''
 		});
 	}
 }
