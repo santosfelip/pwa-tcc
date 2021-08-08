@@ -14,6 +14,7 @@ export interface IProduct {
 	isPromotional: boolean;
 	image: string;
 	brandName: string;
+	category: string;
 	uid?: string;
 };
 
@@ -53,12 +54,23 @@ export class ProductService {
 	}
 
 	public async getAllProducts(): Promise<any> {
-		let params = new HttpParams();
-		//TODO: Passar as categorias dinamicamente para a API
-		['alimentos', 'higiene', 'bebidas', 'produtos recomendados'].forEach((category: string) =>{
-			params = params.append(`categories[]`, category);
-		});
+		const { uid } = this.storage.getItemData('userData');
+		const endpoint: string = `${API.v1}/products/${uid}`;
 
+		try {
+
+			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
+		} catch (error) {
+			throw new Error('Erro ao buscar os produtos!');
+		}
+	}
+
+	public async getProductsByCategories(categories: Array<any>): Promise<any> {
+		let params = new HttpParams();
+
+		categories.forEach((category: any) =>{
+			params = params.append('categories[]', category?.label);
+		});
 
 		const { uid } = this.storage.getItemData('userData');
 		const endpoint: string = `${API.v1}/products/${uid}`;
@@ -67,7 +79,7 @@ export class ProductService {
 
 			return await this.httpClient.get(endpoint, { headers: this.getHeader(), params }).toPromise();
 		} catch (error) {
-			throw new Error('Erro ao buscar os produtos!');
+			throw new Error('Erro ao filtrar os produtos!');
 		}
 	}
 

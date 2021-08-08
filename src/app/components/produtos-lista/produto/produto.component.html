@@ -8,6 +8,7 @@
 		<ion-card-subtitle *ngIf="isPromotional">Produto registrado em perído promocional</ion-card-subtitle>
 	</ion-card-header>
 	<ion-card-content>
+		<p>Categoria: {{category}}</p>
 		<ion-row>
 			<ion-icon name="thumbs-up-sharp" [color]="isLiked ? 'primary' : 'ligth'" (click)="changeIcon()"></ion-icon>
 			<ion-text [color]="isLiked ? 'primary' : 'ligth'">{{numberLikes}} curtidas</ion-text>

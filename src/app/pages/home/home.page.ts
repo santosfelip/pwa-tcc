@@ -46,20 +46,23 @@ export class HomePage {
 			icon: true
 		};
 
-		const isSaved = this.categoriesListClicked.find(categorie => categorie.id === categorieSelected.id);
-		if(!isSaved) {
-			if(id === 0) {
-				this.productsList = await this.productService.getRecommendations();
-			}
-
+		// Verifica se a categoria já foi selecionada
+		const isClicked = this.categoriesListClicked.find(
+			categorie => categorie.id === categorieSelected.id
+		);
+		if(!isClicked) {
 			this.categoriesListClicked.push(categorieSelected);
+			this.getProductsByCategories();
 		}
 	}
 
 	public async removeCategorie(id: number): Promise<void> {
-		if(this.categoriesListClicked[id].id === 0) {
+		if(this.categoriesListClicked.length === 1) {
 			this.getProducts();
+		} else {
+			this.getProductsByCategories();
 		}
+
 		this.categoriesListClicked.splice(id, 1);
 	}
 
@@ -72,6 +75,20 @@ export class HomePage {
 			this.productsList = this.isLiked(response);
 		} catch (err) {
 			this.toast.show('Não foi possível localizar os Produtos!', 2000, 'danger');
+		}
+
+		await this.loading.hidde();
+	}
+
+	private async getProductsByCategories(): Promise<void> {
+		try {
+			await this.loading.default();
+			await this.getLikes();
+
+			const response = await this.productService.getProductsByCategories(this.categoriesListClicked);
+			this.productsList = this.isLiked(response);
+		} catch (err) {
+			this.toast.show('Não foi realizar esta requisição!', 2000, 'danger');
 		}
 
 		await this.loading.hidde();
@@ -91,7 +108,7 @@ export class HomePage {
 		try {
 			this.arrayLikes = await this.eventService.getLikes();
 		} catch (error) {
-			this.toast.show('Não foi possível obter a sua localização!', 2000, 'danger');
+			this.toast.show('Não foi realizar esta requisição!', 2000, 'danger');
 		}
 	}
 }

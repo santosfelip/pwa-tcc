@@ -17,6 +17,7 @@ export class ProdutoComponent implements OnInit{
 	@Input() productId: string;
 	@Input() numberLikes: number;
 	@Input() isLiked: boolean;
+	@Input() category: string;
 
 	public classCss: string;
 	public urlToMaps: string;
