@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
 import { ProductService } from 'src/app/services/product.service';
 import { Loading } from 'src/app/utils/loading';
 import { Toast } from 'src/app/utils/toast';
+import { HandleError } from 'src/app/utils/handleError';
 import categories from '../../utils/categories.json';
 
 @Component({
@@ -14,14 +15,14 @@ import categories from '../../utils/categories.json';
 export class AddProductPage {
 
 	public productForm: FormGroup = this.formBuilder.group({
-		title: '',
-		marketName: '',
-		price: '',
-		brand: '',
-		isPromotional: false,
-		city: '',
-		stateCode: '',
-		category: ''
+		title: ['', [Validators.required]],
+		marketName: ['', [Validators.required]],
+		price: ['', [Validators.required]],
+		brand: ['', [Validators.required]],
+		isPromotional: [false, [Validators.required]],
+		city: ['', [Validators.required]],
+		stateCode: ['', [Validators.required]],
+		category: ['', [Validators.required]]
 	});
 
 	public formFields: Array<FormField> = [
@@ -74,6 +75,10 @@ export class AddProductPage {
 
 	public async addProduct(): Promise<void> {
 		try {
+			if(!this.productForm.valid) {
+				throw Error('Preencha Todos os Campos');
+			}
+
 			await this.loading.show('Salvando...', 30000);
 
 			await this.productService.addProduct(this.productForm.value);
@@ -83,12 +88,7 @@ export class AddProductPage {
 
 			await this.toast.show('Produto Cadastrado com Sucesso!', 3000, 'success');
 		} catch (err) {
-			let message = 'Dados Inválido!';
-			if(typeof err?.error?.data === 'string') {
-				message =  err?.error?.data;
-			}
-
-			await this.toast.show(message, 2000, 'danger');
+			await this.toast.show(HandleError.getMessageError(err), 2000, 'danger');
 		}
 
 		await this.loading.hidde();

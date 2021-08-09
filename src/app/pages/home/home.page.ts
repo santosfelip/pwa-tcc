@@ -72,8 +72,9 @@ export class HomePage {
 			await this.getLikes();
 
 			const response = await this.productService.getAllProducts();
-			this.productsList = this.isLiked(response);
+			this.productsList = this.formatProductData(response);
 		} catch (err) {
+			console.log(err);
 			this.toast.show('Não foi possível localizar os Produtos!', 2000, 'danger');
 		}
 
@@ -86,7 +87,7 @@ export class HomePage {
 			await this.getLikes();
 
 			const response = await this.productService.getProductsByCategories(this.categoriesListClicked);
-			this.productsList = this.isLiked(response);
+			this.productsList = this.formatProductData(response);
 		} catch (err) {
 			this.toast.show('Não foi realizar esta requisição!', 2000, 'danger');
 		}
@@ -94,14 +95,30 @@ export class HomePage {
 		await this.loading.hidde();
 	}
 
-	private isLiked(productsData) {
+	private formatProductData(productsData) {
 		return productsData.map((product) => {
 			const isLiked = this.arrayLikes.includes(product.productId);
+
+			// Se o período promocional tiver passado de 10 dias
+			// o atributo isPromotional é setado em false
+			if(
+				product.isPromotional &&
+				this.isPromotionalPeriod(product?.creat_at, 10)
+			) {
+				product.isPromotional = false;
+			};
+
 			return {
 				...product,
 				isLiked
 			};
 		});
+	}
+
+	private isPromotionalPeriod(date: any, days: number): boolean {
+		// eslint-disable-next-line no-underscore-dangle
+		const created = new Date(date._seconds * 1000 * 1000);
+		return (created.getDate() - new Date().getDate() <= -days);
 	}
 
 	private async getLikes(): Promise<any> {

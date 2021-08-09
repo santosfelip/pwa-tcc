@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
+import { HandleError } from 'src/app/utils/handleError';
 import { Loading } from 'src/app/utils/loading';
 import { Toast } from 'src/app/utils/toast';
 import { AuthService } from '../guards/auth.service';
@@ -13,11 +14,11 @@ import { AuthService } from '../guards/auth.service';
 })
 export class CadastroPage {
 	public registerForm: FormGroup = this.formBuilder.group({
-		name: '',
-		email: '',
-		password: '',
-		city: '',
-		stateCode: ''
+		name: ['', [Validators.required]],
+		email: ['', [Validators.required, Validators.email]],
+		password: ['', [Validators.required, Validators.minLength(6)]],
+		city: ['', [Validators.required]],
+		stateCode: ['', [Validators.required]]
 	});
 
 	public formFields: Array<FormField> = [
@@ -68,8 +69,8 @@ export class CadastroPage {
 		};
 
 		try {
-			if(!this.isValidUser(newUser)) {
-				throw Error('Preencha todos os Campos!');
+			if(!this.registerForm.valid) {
+				throw Error('Preencha todos os Campos Corretamente');
 			}
 
 			await this.loading.show('Salvando...', 5000);
@@ -81,7 +82,7 @@ export class CadastroPage {
 			await this.loading.hidde();
 			await this.signIn(this.registerForm.value);
 		} catch (err) {
-			await this.toast.show(err.message, 2000, 'danger');
+			await this.toast.show(HandleError.getMessageError(err), 2000, 'danger');
 		}
 
 		await this.loading.hidde();
@@ -94,18 +95,9 @@ export class CadastroPage {
 
 			this.router.navigate(['/home'], { replaceUrl: true });
 		} catch (err) {
-			await this.toast.show(err.message, 2000, 'danger');
+			await this.toast.show(HandleError.getMessageError(err), 2000, 'danger');
 		}
 
 		await this.loading.hidde();
-	}
-
-	private isValidUser(user): boolean {
-		for (const fieldName of Object.keys(user)) {
-			if(user[fieldName] === '') {
-				return false;
-			}
-		}
-		return true;
 	}
 }

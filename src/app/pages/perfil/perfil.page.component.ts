@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
-import { IUser } from 'src/app/interfaces/user.interface';
-import { AuthTokenService } from 'src/app/services/auth-token.service';
 import { UserService } from 'src/app/services/user.service';
+import { HandleError } from 'src/app/utils/handleError';
 import { Loading } from 'src/app/utils/loading';
 import { Toast } from 'src/app/utils/toast';
 
 @Component({
-  selector: 'app-perfilt',
+  selector: 'app-perfil',
   templateUrl: './perfil.page.html'
 })
 export class PerfilPage implements OnInit {
 
 	public registerForm: FormGroup = this.formBuilder.group({
-		name: '',
-		email: '',
-		password: '',
-		city: '',
-		stateCode: ''
+		name: ['', [Validators.required]],
+		email: ['', [Validators.required, Validators.email]],
+		password: ['', [Validators.required, Validators.minLength(6)]],
+		city: ['', [Validators.required]],
+		stateCode: ['', [Validators.required]]
 	});
 
 	public formFields: Array<FormField> = [
@@ -52,16 +51,17 @@ export class PerfilPage implements OnInit {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private userService: UserService,
-		private tokenService: AuthTokenService,
 		private loading: Loading,
 		private toast: Toast
 	) { }
 
 	ngOnInit() {
+		console.log(this.registerForm);
 		this.registerForm.setValue({
 			name: this.userService.getCurrentUser().name,
 			email: this.userService.getCurrentUser().email,
 			password: '',
+			// Valores defaults adicionados no Componente Select-Sate-City
 			city: '',
 			stateCode: ''
 		});
@@ -72,6 +72,10 @@ export class PerfilPage implements OnInit {
 		user.uid = this.userService.getCurrentUser().uid;
 
 		try {
+			if(!this.registerForm.valid) {
+				throw Error('Preencha os Campos Corretamente');
+			}
+
 			await this.loading.show('Salvando...', 5000);
 
 			await this.userService.editUser(user);
@@ -80,12 +84,7 @@ export class PerfilPage implements OnInit {
 
 			this.router.navigate(['/home'], { replaceUrl: true });
 		} catch (err) {
-			let message = 'Dados Inválido!';
-			if(typeof err?.error?.data === 'string') {
-				message =  err?.error?.data;
-			}
-
-			await this.toast.show(message, 2000, 'danger');
+			await this.toast.show(HandleError.getMessageError(err), 2000, 'danger');
 		}
 
 		await this.loading.hidde();

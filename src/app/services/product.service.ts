@@ -4,6 +4,7 @@ import { API } from 'src/environments/environment';
 import { AuthTokenService } from './auth-token.service';
 import { LocalStorage } from './localStorage.service';
 import { UserService } from './user.service';
+import { HandleError } from '../utils/handleError';
 
 export interface IProduct {
 	productId: string;
@@ -16,6 +17,7 @@ export interface IProduct {
 	brandName: string;
 	category: string;
 	uid?: string;
+	creat_at: any;
 };
 
 @Injectable({
@@ -39,7 +41,7 @@ export class ProductService {
 		try {
 			if(currentUser.stateCode !== product.stateCode ||
 				currentUser.city !== product.city) {
-				throw new Error('Localização do Produto diferente da Atual!');
+				throw new Error('Localização do Produto diferente da Atual');
 			}
 			const productToSave = {
 				...product,
@@ -48,8 +50,8 @@ export class ProductService {
 			};
 
 			await this.httpClient.post(endpoint, productToSave, { headers: this.getHeader() }).toPromise();
-		} catch (error) {
-			throw new Error(error.message);
+		} catch (err) {
+			throw Error(HandleError.getMessageError(err));
 		}
 	}
 
@@ -60,8 +62,8 @@ export class ProductService {
 		try {
 
 			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
-		} catch (error) {
-			throw new Error('Erro ao buscar os produtos!');
+		} catch (err) {
+			throw Error(HandleError.getMessageError(err));
 		}
 	}
 
@@ -78,20 +80,8 @@ export class ProductService {
 		try {
 
 			return await this.httpClient.get(endpoint, { headers: this.getHeader(), params }).toPromise();
-		} catch (error) {
-			throw new Error('Erro ao filtrar os produtos!');
-		}
-	}
-
-	public async getRecommendations(): Promise<any> {
-		const { uid } = this.storage.getItemData('userData');
-		const endpoint: string = `${API.v1}/recommendations/${uid}`;
-
-		try {
-
-			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
-		} catch (error) {
-			throw new Error('Erro ao buscar os produtos!');
+		} catch (err) {
+			throw Error(HandleError.getMessageError(err));
 		}
 	}
 
@@ -102,8 +92,8 @@ export class ProductService {
 		try {
 
 			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
-		} catch (error) {
-			throw new Error('Erro ao buscar os produtos!');
+		} catch (err) {
+			throw Error(HandleError.getMessageError(err));
 		}
 	}
 

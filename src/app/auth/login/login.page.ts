@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormButton } from 'src/app/interfaces/button.interface';
 import { FormField } from 'src/app/interfaces/form-field.interface';
@@ -7,6 +7,7 @@ import { AuthService } from '../guards/auth.service';
 import { Loading } from 'src/app/utils/loading';
 import { DOCUMENT } from '@angular/common';
 import { Toast } from 'src/app/utils/toast';
+import { HandleError } from 'src/app/utils/handleError';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,8 @@ import { Toast } from 'src/app/utils/toast';
 })
 export class LoginPage {
 	public loginForm: FormGroup = this.formBuilder.group({
-		email: '',
-		password: ''
+		email: ['', [Validators.required, Validators.email]],
+		password: ['', [Validators.required, Validators.minLength(6)]]
 	});
 
 	public formFields: Array<FormField> = [
@@ -61,13 +62,17 @@ export class LoginPage {
 		const { email, password } = this.loginForm.value;
 
 		try {
+			if(!this.loginForm.valid) {
+				throw Error('Email ou Senha inválidos!');
+			}
+
 			await this.loading.default();
 
 			await this.authService.signIn(email.trim(), password);
 
 			this.router.navigate(['/home'], { replaceUrl: true });
 		} catch (err) {
-			await this.toast.show('Email ou Senha inválidos!', 2000, 'danger');
+			await this.toast.show(HandleError.getMessageError(err), 2000, 'danger');
 		}
 
 		await this.loading.hidde();

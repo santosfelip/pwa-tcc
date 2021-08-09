@@ -5,7 +5,9 @@
 			<a [href]="urlToMaps" target="_blank"> Como chegar?</a>
 		</ion-card-subtitle>
 	  	<ion-card-title>{{productName}} - R$ {{price}}</ion-card-title>
-		<ion-card-subtitle *ngIf="isPromotional">Produto registrado em perído promocional</ion-card-subtitle>
+		<ion-card-subtitle *ngIf="isPromotional" color="tertiary">
+			Produto registrado em perído promocional
+		</ion-card-subtitle>
 	</ion-card-header>
 	<ion-card-content>
 		<p>Categoria: {{category}}</p>
