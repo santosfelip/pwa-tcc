@@ -74,7 +74,6 @@ export class HomePage {
 			const response = await this.productService.getAllProducts();
 			this.productsList = this.formatProductData(response);
 		} catch (err) {
-			console.log(err);
 			this.toast.show('Não foi possível localizar os Produtos!', 2000, 'danger');
 		}
 
