@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-produto',
@@ -18,11 +19,17 @@ export class ProdutoComponent implements OnInit{
 	@Input() numberLikes: number;
 	@Input() isLiked: boolean;
 	@Input() category: string;
+	@Input() isDelete: boolean;
+
+	@Output() clickedDelete: EventEmitter<string> = new EventEmitter();
 
 	public classCss: string;
 	public urlToMaps: string;
 
-	constructor(private eventService: EventService){}
+	constructor(
+		private eventService: EventService,
+		private productService: ProductService
+	){}
 
 	ngOnInit() {
 		this.classCss = !this.showDistance ? 'not-distance' : 'show-distance';
@@ -45,7 +52,11 @@ export class ProdutoComponent implements OnInit{
 		try {
 			await this.eventService.saveEvent(newEvent);
 		} catch (error) {
-			console.log(error);
+			throw Error('Erro ao salvar evento!');
 		}
+	}
+
+	public async handleClick(productId: string): Promise<void> {
+		this.clickedDelete.emit(productId);
 	}
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IProduct } from 'src/app/services/product.service';
 
 @Component({
@@ -9,4 +9,11 @@ import { IProduct } from 'src/app/services/product.service';
 export class ProdutosListaComponent {
 
 	@Input() productsList: Array<IProduct>;
+	@Input() isDelete: boolean = false;
+
+	@Output() clickedDelete: EventEmitter<string> = new EventEmitter();
+
+	public handleClick(productId: string) {
+		this.clickedDelete.emit(productId);
+	}
 }

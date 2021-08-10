@@ -55,6 +55,17 @@ export class ProductService {
 		}
 	}
 
+	public async deleteProduct(productId: string): Promise<void> {
+		const endpoint: string = `${API.v1}/product/${productId}`;
+
+		try {
+			await this.httpClient.delete(endpoint, { headers: this.getHeader() }).toPromise();
+		} catch (err) {
+			throw Error(HandleError.getMessageError(err));
+		}
+	}
+
+
 	public async getAllProducts(): Promise<any> {
 		const { uid } = this.storage.getItemData('userData');
 		const endpoint: string = `${API.v1}/products/${uid}`;

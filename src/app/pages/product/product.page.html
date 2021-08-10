@@ -12,6 +12,7 @@
 
 	<app-produtos-lista
 		[productsList]="productsList"
-		[showDistance]="showDistance"
+		[isDelete]="true"
+		(clickedDelete)="deleteProduct($event)"
 	></app-produtos-lista>
 </ion-content>

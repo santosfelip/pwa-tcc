@@ -3,6 +3,13 @@
 		<ion-card-subtitle>
 			{{marketName}}
 			<a [href]="urlToMaps" target="_blank"> Como chegar?</a>
+			<ion-icon
+				(click)="handleClick(productId)"
+				class="ion-float-right"
+				color="danger"
+				*ngIf="isDelete"
+				name="trash-outline"
+			></ion-icon>
 		</ion-card-subtitle>
 	  	<ion-card-title>{{productName}} - R$ {{price}}</ion-card-title>
 		<ion-card-subtitle *ngIf="isPromotional" color="tertiary">

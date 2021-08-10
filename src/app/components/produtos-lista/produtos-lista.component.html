@@ -8,5 +8,7 @@
 	[numberLikes]="product.likes"
 	[isLiked]="product.isLiked"
 	[category]="product?.category"
+	[isDelete]="isDelete"
+	(clickedDelete)="handleClick($event)"
 >
 </app-produto>
