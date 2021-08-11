@@ -13,6 +13,8 @@ export interface IProduct {
 	marketName: string;
 	price: number;
 	isPromotional: boolean;
+	isFeedBack: boolean;
+	isLiked: boolean;
 	image: string;
 	brandName: string;
 	category: string;
