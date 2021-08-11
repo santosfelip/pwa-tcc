@@ -18,8 +18,8 @@
 		</ion-fab-button>
 	</ion-fab>
 
-
 	<app-produtos-lista
 		[productsList]="productsList"
 	></app-produtos-lista>
+	<app-not-found *ngIf="notFound"></app-not-found>
 </ion-content>

@@ -15,4 +15,5 @@
 		[isDelete]="true"
 		(clickedDelete)="deleteProduct($event)"
 	></app-produtos-lista>
+	<app-not-found *ngIf="notFound"></app-not-found>
 </ion-content>

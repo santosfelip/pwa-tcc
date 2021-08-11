@@ -56,7 +56,6 @@ export class PerfilPage implements OnInit {
 	) { }
 
 	ngOnInit() {
-		console.log(this.registerForm);
 		this.registerForm.setValue({
 			name: this.userService.getCurrentUser().name,
 			email: this.userService.getCurrentUser().email,

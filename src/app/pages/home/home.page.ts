@@ -16,6 +16,7 @@ import { FeedBackService } from 'src/app/services/feedback.service';
 export class HomePage {
 	public productsList: Array<IProduct>;
 	public showDistance: boolean = true;
+	public notFound: boolean = false;
 
 	public categoriesList = categories.categoriesChip.map((category) => ({
 		outiline: true,
@@ -57,23 +58,25 @@ export class HomePage {
 		);
 		if(!isClicked) {
 			this.categoriesListClicked.push(categorieSelected);
-			this.getProductsByCategories();
+			await this.getProductsByCategories();
 		}
 	}
 
 	public async removeCategorie(id: number): Promise<void> {
-		if(this.categoriesListClicked.length === 1) {
-			this.getProducts();
-		} else {
-			this.getProductsByCategories();
-		}
-
 		this.categoriesListClicked.splice(id, 1);
+		if(!this.categoriesListClicked.length) {
+			await this.getProducts();
+		} else {
+			await this.getProductsByCategories();
+		}
 	}
 
 	private async getProducts(): Promise<void> {
 		try {
 			await this.loading.show('Buscando Produtos em sua Cidade...', 50000);
+
+			this.notFound = false;
+
 			await this.getLikes();
 			await this.getFeedBacks();
 
@@ -84,11 +87,14 @@ export class HomePage {
 		}
 
 		await this.loading.hidde();
+		this.notFound = !this.productsList?.length;
 	}
 
 	private async getProductsByCategories(): Promise<void> {
 		try {
 			await this.loading.default();
+			this.notFound = false;
+
 			await this.getLikes();
 			await this.getFeedBacks();
 
@@ -98,6 +104,7 @@ export class HomePage {
 			this.toast.show('Não foi realizar esta requisição!', 2000, 'danger');
 		}
 
+		this.notFound = !this.productsList?.length;
 		await this.loading.hidde();
 	}
 

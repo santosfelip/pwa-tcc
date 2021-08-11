@@ -14,6 +14,7 @@ export class ProductPage {
 	public productsList: Array<IProduct>;
 	public showDistance: boolean = false;
 	public arrayLikes: Array<string>;
+	public notFound: boolean = false;
 
 	constructor(
 		private productService: ProductService,
@@ -25,6 +26,7 @@ export class ProductPage {
 
 	async ionViewWillEnter() {
 		await this.getProducts();
+		this.notFound = !this.productsList?.length;
 	}
 
 	public addProduct(): void {
