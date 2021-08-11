@@ -6,6 +6,7 @@ import { IProduct } from 'src/app/services/product.service';
 import { Toast } from 'src/app/utils/toast';
 import { EventService } from 'src/app/services/event.service';
 import categories from '../../utils/categories.json';
+import { FeedBackService } from 'src/app/services/feedback.service';
 
 @Component({
   selector: 'app-home',
@@ -15,18 +16,22 @@ import categories from '../../utils/categories.json';
 export class HomePage {
 	public productsList: Array<IProduct>;
 	public showDistance: boolean = true;
-	public arrayLikes: Array<string>;
+
 	public categoriesList = categories.categoriesChip.map((category) => ({
 		outiline: true,
 		color: 'primary',
 		label: category
 	}));
 
+	public arrayLikes: Array<string>;
+	public arrayFeedBacks: Array<string>;
 	public categoriesListClicked = [];
+
 	constructor(
 		private router: Router,
 		private productService: ProductService,
 		private eventService: EventService,
+		private feedBackService: FeedBackService,
 		private loading: Loading,
 		private toast: Toast
 	) { }
@@ -70,6 +75,7 @@ export class HomePage {
 		try {
 			await this.loading.show('Buscando Produtos em sua Cidade...', 50000);
 			await this.getLikes();
+			await this.getFeedBacks();
 
 			const response = await this.productService.getAllProducts();
 			this.productsList = this.formatProductData(response);
@@ -84,6 +90,7 @@ export class HomePage {
 		try {
 			await this.loading.default();
 			await this.getLikes();
+			await this.getFeedBacks();
 
 			const response = await this.productService.getProductsByCategories(this.categoriesListClicked);
 			this.productsList = this.formatProductData(response);
@@ -97,6 +104,7 @@ export class HomePage {
 	private formatProductData(productsData) {
 		return productsData.map((product) => {
 			const isLiked = this.arrayLikes.includes(product.productId);
+			const isFeedBack = this.arrayFeedBacks.includes(product.productId);
 
 			// Se o período promocional tiver passado de 10 dias
 			// o atributo isPromotional é setado em false
@@ -109,7 +117,8 @@ export class HomePage {
 
 			return {
 				...product,
-				isLiked
+				isLiked,
+				isFeedBack
 			};
 		});
 	}
@@ -123,6 +132,14 @@ export class HomePage {
 	private async getLikes(): Promise<any> {
 		try {
 			this.arrayLikes = await this.eventService.getLikes();
+		} catch (error) {
+			this.toast.show('Não foi realizar esta requisição!', 2000, 'danger');
+		}
+	}
+
+	private async getFeedBacks(): Promise<any> {
+		try {
+			this.arrayFeedBacks = await this.feedBackService.getAll();
 		} catch (error) {
 			this.toast.show('Não foi realizar esta requisição!', 2000, 'danger');
 		}

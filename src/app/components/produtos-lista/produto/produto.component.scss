@@ -20,3 +20,13 @@ ion-card-content {
 	display: flex;
 	flex-direction: column;
 }
+
+ion-card-title {
+	text-transform: capitalize;
+}
+
+.align-center {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}

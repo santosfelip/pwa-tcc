@@ -6,33 +6,36 @@ import { AuthTokenService } from './auth-token.service';
 @Injectable({
 	providedIn: 'root'
 })
-export class EventService {
-
+export class FeedBackService {
 	constructor(
 		private httpClient: HttpClient,
 		private authTokenService: AuthTokenService
 	){}
 
-	public async saveEvent(event): Promise<void> {
-		const endpoint = `${API.v1}/event`;
+	public async saveFeedBack(productId: string, action: 'add' | 'remove'): Promise<void> {
+		const endpoint = `${API.v1}/feedback`;
 		try {
 			const { uid } = this.authTokenService.decodePayloadJWT();
-			const newEvent = {...event, person: uid };
+			const feedBack = {
+				userId: uid,
+				action,
+				productId
+			};
 
-			await this.httpClient.post(endpoint, newEvent, { headers: this.getHeader() }).toPromise();
+			await this.httpClient.post(endpoint, feedBack, { headers: this.getHeader() }).toPromise();
 		} catch (error) {
-			throw new Error('Erro ao salvar Evento!');
+			throw Error('Erro ao salvar feedback');
 		}
 	}
 
-	public async getLikes(): Promise<any> {
+	public async getAll(): Promise<any> {
 		try {
 			const { uid } = this.authTokenService.decodePayloadJWT();
-			const endpoint = `${API.v1}/likes/${uid}`;
+			const endpoint = `${API.v1}/feedbacks/${uid}`;
 
 			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
 		} catch (error) {
-			throw new Error('Falha na requisição');
+			throw Error('Erro ao salvar feedback');
 		}
 	}
 
@@ -41,5 +44,4 @@ export class EventService {
             authorization: `Bearer ${this.authTokenService.getToken()}`
         });
 	}
-
 }

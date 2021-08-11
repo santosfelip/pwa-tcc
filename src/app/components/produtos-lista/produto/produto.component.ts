@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
+import { FeedBackService } from 'src/app/services/feedback.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class ProdutoComponent implements OnInit{
 	@Input() isLiked: boolean;
 	@Input() category: string;
 	@Input() isDelete: boolean;
+	@Input() isFeedBack: boolean;
 
 	@Output() clickedDelete: EventEmitter<string> = new EventEmitter();
 
@@ -28,7 +30,7 @@ export class ProdutoComponent implements OnInit{
 
 	constructor(
 		private eventService: EventService,
-		private productService: ProductService
+		private feedBackService: FeedBackService
 	){}
 
 	ngOnInit() {
@@ -58,5 +60,16 @@ export class ProdutoComponent implements OnInit{
 
 	public async handleClick(productId: string): Promise<void> {
 		this.clickedDelete.emit(productId);
+	}
+
+	public async handleFeedBack(): Promise<void> {
+		try {
+			this.isFeedBack = !this.isFeedBack;
+			const action = this.isFeedBack ? 'add' : 'remove';
+
+			await this.feedBackService.saveFeedBack(this.productId, action);
+		} catch (error) {
+			throw Error(error);
+		}
 	}
 }

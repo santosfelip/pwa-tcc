@@ -22,5 +22,11 @@
 			<ion-icon name="thumbs-up-sharp" [color]="isLiked ? 'primary' : 'ligth'" (click)="changeIcon()"></ion-icon>
 			<ion-text [color]="isLiked ? 'primary' : 'ligth'">{{numberLikes}} curtidas</ion-text>
 		</ion-row>
+		<ion-row  class="ion-margin-top">
+			<div class="align-center" (click)="handleFeedBack()">
+				<ion-icon [color]="isFeedBack ? 'primary' : 'ligth'" name="sad-outline"></ion-icon>
+				<ion-text [color]="isFeedBack ? 'primary' : 'ligth'">Não encontrei o Produto</ion-text>
+			</div>
+		</ion-row>
 	</ion-card-content>
 </ion-card>
