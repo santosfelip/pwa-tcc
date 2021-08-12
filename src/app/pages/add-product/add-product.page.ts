@@ -79,7 +79,7 @@ export class AddProductPage {
 				throw Error('Preencha Todos os Campos');
 			}
 
-			await this.loading.show('Salvando...', 30000);
+			await this.loading.show('Salvando...', 3000);
 
 			await this.productService.addProduct(this.productForm.value);
 

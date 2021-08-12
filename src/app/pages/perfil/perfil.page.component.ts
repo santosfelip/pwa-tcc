@@ -75,7 +75,7 @@ export class PerfilPage implements OnInit {
 				throw Error('Preencha os Campos Corretamente');
 			}
 
-			await this.loading.show('Salvando...', 5000);
+			await this.loading.show('Salvando...', 3000);
 
 			await this.userService.editUser(user);
 
