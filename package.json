@@ -7,7 +7,6 @@
     "ng": "ng",
     "start": "node server.js",
     "dev": "ng serve",
-    "postinstall": "ng build --aot --configuration production",
     "deploy:heroku": "git push heroku master",
     "deploy:v1": "git push heroku v1:master",
     "test": "ng test",
