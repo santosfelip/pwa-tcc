@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { FeedBackService } from 'src/app/services/feedback.service';
-import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-produto',
