@@ -1,11 +1,17 @@
-ion-header ion-toolbar:first-of-type {
-    padding: 0;
-}
-
-ion-toolbar {
-	text-align: center;
+#header-content {
+	display: flex;
+	flex-direction: row;
 }
 
 ion-title {
+	width: 100%;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	transform: translateY(-50%);
 	cursor: pointer;
+}
+
+ion-header ion-toolbar:first-of-type {
+    padding: 0;
 }
