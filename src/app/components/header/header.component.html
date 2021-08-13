@@ -1,10 +1,8 @@
 <ion-header>
 	<ion-toolbar color="primary">
-		<div id="header-content">
-			<ion-title (click)="redirectToHome()">QUANTU</ion-title>
-			<ion-buttons slot="end" *ngIf="hasMenu">
-				<ion-menu-button auto-hide="false"></ion-menu-button>
-			</ion-buttons>
-		</div>
+		<ion-title (click)="redirectToHome()">QUANTU</ion-title>
+		<ion-buttons slot="start" *ngIf="hasMenu">
+			<ion-menu-button auto-hide="false"></ion-menu-button>
+		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
