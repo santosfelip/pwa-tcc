@@ -41,6 +41,11 @@ export class ProductService {
 		const currentUser = this.userService.getCurrentUser();
 
 		try {
+			if(!product.stateCode || !product.city) {
+				product.stateCode = currentUser.stateCode;
+				product.city = currentUser.city;
+			}
+
 			if(currentUser.stateCode !== product.stateCode ||
 				currentUser.city !== product.city) {
 				throw new Error('Localização do Produto diferente da Atual');

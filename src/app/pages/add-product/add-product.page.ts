@@ -20,8 +20,8 @@ export class AddProductPage {
 		price: ['', [Validators.required]],
 		brand: ['', [Validators.required]],
 		isPromotional: [false, [Validators.required]],
-		city: ['', [Validators.required]],
-		stateCode: ['', [Validators.required]],
+		city: '',
+		stateCode: '',
 		category: ['', [Validators.required]]
 	});
 
