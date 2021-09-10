@@ -1,0 +1,17 @@
+<app-menu-lateral></app-menu-lateral>
+
+<ion-content id="main-content" [fullscreen]="true">
+	<app-header [hasMenu]="true"></app-header>
+
+		<ion-list>
+			<ion-list-header>
+				Usuários de sua cidade
+			</ion-list-header>
+			<ion-item *ngFor="let item of rankingUsers">
+				<ion-icon name="person-circle-outline" slot="start" size="large"></ion-icon>
+				<ion-label>{{item.name}}</ion-label>
+				<p>{{ item.points || 0 }} pontos</p>
+			</ion-item>
+		</ion-list>
+</ion-content>
+

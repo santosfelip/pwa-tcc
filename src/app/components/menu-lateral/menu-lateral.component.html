@@ -2,29 +2,19 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>Menu</ion-title>
+		<div class="points-user">
+			<ion-icon name="trophy-sharp" class="ion-margin-end"></ion-icon>
+			<ion-text>1000 pontos</ion-text>
+		</div>
       </ion-toolbar>
     </ion-header>
     <ion-content>
 		<ion-list>
-			<ion-item (click)="changeNavigation('/perfil')">
-				<ion-icon name="person-circle-outline" slot="start"></ion-icon>
-				<ion-label>Perfil</ion-label>
-			</ion-item>
-			<ion-item (click)="changeNavigation('/home')">
-				<ion-icon name="cart" slot="start"></ion-icon>
-				<ion-label>Produtos Perto de Você</ion-label>
-			</ion-item>
-			<ion-item (click)="changeNavigation('/addProduct')">
-				<ion-icon name="navigate-outline" slot="start"></ion-icon>
-				<ion-label>Adicionar Produto</ion-label>
-			</ion-item>
-			<ion-item (click)="changeNavigation('/produto')">
-				<ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
-				<ion-label>Meus Produtos</ion-label>
-			</ion-item>
-			<ion-item (click)="changeNavigation('/login')">
-				<ion-icon name="exit-outline" slot="start"></ion-icon>
-				<ion-label>Sair</ion-label>
+			<ion-item
+				*ngFor="let item of menuItens"
+				(click)="changeNavigation(item.link)">
+				<ion-icon [name]="item.iconName" slot="start"></ion-icon>
+				<ion-label>{{item.label}}</ion-label>
 			</ion-item>
 		</ion-list>
     </ion-content>

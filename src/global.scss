@@ -55,3 +55,12 @@ select:-webkit-autofill:focus {
 	--ion-safe-area-top: 20px;
 	--ion-safe-area-bottom: 22px;
 }
+
+// Remoção de padding do toolbar por padrão
+ion-header ion-toolbar:first-of-type {
+    padding-top: 0;
+}
+
+ion-icon {
+	pointer-events: none;
+}

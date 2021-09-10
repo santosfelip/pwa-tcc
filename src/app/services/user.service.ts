@@ -34,6 +34,23 @@ export class UserService {
 		}
 	}
 
+	public async getAllUserInCity(): Promise<any> {
+		try {
+			const { uid } =  this.authTokenService.decodePayloadJWT();
+
+			const endpoint: string = `${API.v1}/users/${uid}`;
+			const token: string = this.authTokenService.getToken();
+
+			const headers: HttpHeaders = new HttpHeaders({
+                authorization: `Bearer ${token}`
+            });
+
+			return await this.httpClient.get(endpoint, { headers }).toPromise();
+		} catch (err) {
+			throw Error('Falha na Requisição!');
+		}
+	}
+
 	public saveCurrentUser(user): void {
 		this.storage.setItemData('userData', user);
 	}

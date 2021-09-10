@@ -19,7 +19,9 @@
 	<ion-card-content>
 		<p>Categoria: {{category}}</p>
 		<ion-row>
-			<ion-icon name="thumbs-up-sharp" [color]="isLiked ? 'primary' : 'ligth'" (click)="changeIcon()"></ion-icon>
+			<div (click)="changeIcon()" class="iconClick">
+				<ion-icon name="thumbs-up-sharp" [color]="isLiked ? 'primary' : 'ligth'"></ion-icon>
+			</div>
 			<ion-text [color]="isLiked ? 'primary' : 'ligth'">{{numberLikes}} curtidas</ion-text>
 		</ion-row>
 		<ion-row  class="ion-margin-top">

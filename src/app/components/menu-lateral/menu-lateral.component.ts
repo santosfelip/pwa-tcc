@@ -9,6 +9,39 @@ import { AuthService } from 'src/app/auth/guards/auth.service';
   styleUrls: ['./menu-lateral.component.scss']
 })
 export class MenuLateralComponent {
+	public menuItens = [
+		{
+			label: 'Produtos Perto de Você',
+			iconName: 'cart',
+			link: '/home'
+		},
+		{
+			label: 'Ranking de sua Cidade',
+			iconName: 'trophy-sharp',
+			link: '/ranking'
+		},
+		{
+			label: 'Perfil',
+			iconName: 'person-circle-outline',
+			link: '/perfil'
+		},
+		{
+			label: 'Adicionar Produto',
+			iconName: 'navigate-outline',
+			link: '/addProduct'
+		},
+		{
+			label: 'Meus Produtos',
+			iconName: 'cloud-upload-outline',
+			link: '/produto'
+		},
+		{
+			label: 'Sair',
+			iconName: 'exit-outline',
+			link: '/login'
+		}
+	];
+
 	constructor(
 		private router: Router,
 		private menuController: MenuController,

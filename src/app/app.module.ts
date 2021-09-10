@@ -26,9 +26,11 @@ import { ProductPage } from './pages/product/product.page';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { SelectStateCityComponent } from './components/select-state-city/select-state-city.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { RankingPage } from './pages/ranking/ranking.page.component';
 @NgModule({
 	declarations: [
 		AppComponent,
+		RankingPage,
 		ProdutoComponent,
 		NotFoundComponent,
 		CategoriesComponent,

@@ -7,6 +7,7 @@ import { AddProductPage } from './pages/add-product/add-product.page';
 import { PerfilPage } from './pages/perfil/perfil.page.component';
 import { AuthGuardService } from './auth/guards/auth-guard.service';
 import { ProductPage } from './pages/product/product.page';
+import { RankingPage } from './pages/ranking/ranking.page.component';
 
 const routes: Routes = [
 	{
@@ -31,6 +32,11 @@ const routes: Routes = [
 	{
 		path: 'addProduct',
 		component: AddProductPage,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'ranking',
+		component: RankingPage,
 		canActivate: [AuthGuardService]
 	},
 	{
