@@ -9,7 +9,7 @@ export class LocalStorage {
 		localStorage.setItem(id, JSON.stringify(data));
 	}
 
-	public getItemData(id: 'token' | 'userData' | 'locationData'): any {
+	public getItemData(id: 'token' | 'userData' | 'locationData' | 'likes' | 'feedbacks'): any {
 		return JSON.parse(localStorage.getItem(id));
 	}
 

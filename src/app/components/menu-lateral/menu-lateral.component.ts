@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/guards/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-menu-lateral',
@@ -21,11 +22,6 @@ export class MenuLateralComponent {
 			link: '/ranking'
 		},
 		{
-			label: 'Perfil',
-			iconName: 'person-circle-outline',
-			link: '/perfil'
-		},
-		{
 			label: 'Adicionar Produto',
 			iconName: 'navigate-outline',
 			link: '/addProduct'
@@ -36,17 +32,29 @@ export class MenuLateralComponent {
 			link: '/produto'
 		},
 		{
+			label: 'Perfil',
+			iconName: 'person-circle-outline',
+			link: '/perfil'
+		},
+		{
 			label: 'Sair',
 			iconName: 'exit-outline',
 			link: '/login'
 		}
 	];
 
+	public pointsUser: number = 0;
+
 	constructor(
 		private router: Router,
 		private menuController: MenuController,
-		private authService: AuthService
+		private authService: AuthService,
+		private userService: UserService
 	) {}
+
+	public getPointsUser(): void {
+		this.pointsUser = this.userService.getCurrentUser()?.points;
+	}
 
 	public changeNavigation(route: string): void {
 		if(route === '/login') {

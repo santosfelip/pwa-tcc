@@ -1,10 +1,10 @@
-<ion-menu side="start" content-id="main-content">
+<ion-menu side="start" content-id="main-content" (ionWillOpen)="getPointsUser()">
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>Menu</ion-title>
 		<div class="points-user">
 			<ion-icon name="trophy-sharp" class="ion-margin-end"></ion-icon>
-			<ion-text>1000 pontos</ion-text>
+			<ion-text>{{ pointsUser || 0 }} pontos</ion-text>
 		</div>
       </ion-toolbar>
     </ion-header>

@@ -6,7 +6,8 @@ import { Toast } from 'src/app/utils/toast';
 
 @Component({
   selector: 'app-ranking',
-  templateUrl: './ranking.page.html'
+  templateUrl: './ranking.page.html',
+  styleUrls: ['./ranking.page.scss']
 })
 export class RankingPage implements OnInit {
 	public rankingUsers = [];

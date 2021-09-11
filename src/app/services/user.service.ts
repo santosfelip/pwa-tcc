@@ -28,7 +28,7 @@ export class UserService {
 
 			const response: any = await this.httpClient.patch(endpoint, newData, { headers }).toPromise();
 
-			this.saveCurrentUser(response);
+			await this.saveCurrentUser(response);
 		} catch (err) {
 			throw Error('Falha na Requisição!');
 		}
@@ -51,8 +51,22 @@ export class UserService {
 		}
 	}
 
-	public saveCurrentUser(user): void {
-		this.storage.setItemData('userData', user);
+	public async savePoints(newPoints: number): Promise<void> {
+		try {
+			const { points } =  this.getCurrentUser();
+
+			const data = {
+				points: Number(points) + newPoints
+			};
+
+			await this.editUser(data);
+		} catch (error) {
+			throw Error('Falha na Requisição!');
+		}
+	}
+
+	public async saveCurrentUser(user): Promise<void> {
+		await this.storage.setItemData('userData', user);
 	}
 
 	public getCurrentUser(): any {

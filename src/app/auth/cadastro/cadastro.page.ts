@@ -93,7 +93,7 @@ export class CadastroPage {
 			await this.loading.show('Carregando...', 5000);
 			await this.authService.signIn(email.trim(), password);
 
-			this.router.navigate(['/home'], { replaceUrl: true });
+			this.router.navigate(['/welcome'], { replaceUrl: true });
 		} catch (err) {
 			await this.toast.show(HandleError.getMessageError(err), 2000, 'danger');
 		}

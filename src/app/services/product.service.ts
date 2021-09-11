@@ -5,6 +5,7 @@ import { AuthTokenService } from './auth-token.service';
 import { LocalStorage } from './localStorage.service';
 import { UserService } from './user.service';
 import { HandleError } from '../utils/handleError';
+import { Points } from '../components/enums/points.enum';
 
 export interface IProduct {
 	productId: string;
@@ -57,6 +58,9 @@ export class ProductService {
 			};
 
 			await this.httpClient.post(endpoint, productToSave, { headers: this.getHeader() }).toPromise();
+
+			// Salva o ponto da ação do usuário
+			await this.userService.savePoints(Points.ADD_PRODUCT);
 		} catch (err) {
 			throw Error(HandleError.getMessageError(err));
 		}
