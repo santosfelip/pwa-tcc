@@ -132,7 +132,7 @@ export class HomePage {
 
 	private isPromotionalPeriod(date: any, days: number): boolean {
 		// eslint-disable-next-line no-underscore-dangle
-		const created = new Date(date._seconds * 1000 * 1000);
+		const created = new Date(date._seconds * 1000 );
 		return (created.getDate() - new Date().getDate() <= -days);
 	}
 

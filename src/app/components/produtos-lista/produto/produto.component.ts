@@ -21,11 +21,13 @@ export class ProdutoComponent implements OnInit{
 	@Input() category: string;
 	@Input() isDelete: boolean;
 	@Input() isFeedBack: boolean;
+	@Input() creat_at: any;
 
 	@Output() clickedDelete: EventEmitter<string> = new EventEmitter();
 
 	public classCss: string;
 	public urlToMaps: string;
+	public publishedIn: string;
 
 	constructor(
 		private eventService: EventService,
@@ -37,6 +39,8 @@ export class ProdutoComponent implements OnInit{
 		const codedNameMarket = this.marketName.replace(' ','+');
 
 		this.urlToMaps = `https://www.google.com/maps/search/?api=1&query=${codedNameMarket}`;
+
+		this.setPublishedIn();
 	}
 
 	public async changeIcon(): Promise<void> {
@@ -71,4 +75,11 @@ export class ProdutoComponent implements OnInit{
 			throw Error(error);
 		}
 	}
+
+	private setPublishedIn(): void {
+		// eslint-disable-next-line no-underscore-dangle
+		const creatAt = new Date(this.creat_at._seconds * 1000);
+		this.publishedIn = creatAt.toLocaleDateString('pt-BR');
+	}
+
 }
