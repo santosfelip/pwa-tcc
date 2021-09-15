@@ -9,6 +9,7 @@ import { AuthGuardService } from './auth/guards/auth-guard.service';
 import { ProductPage } from './pages/product/product.page';
 import { RankingPage } from './pages/ranking/ranking.page';
 import { WelcomePage } from './pages/welcome/welcome.page';
+import { ProductDetailsPage } from './pages/product-details/product-details.page';
 
 const routes: Routes = [
 	{
@@ -43,6 +44,11 @@ const routes: Routes = [
 	{
 		path: 'welcome',
 		component: WelcomePage,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'product-details/:productId',
+		component: ProductDetailsPage,
 		canActivate: [AuthGuardService]
 	},
 	{

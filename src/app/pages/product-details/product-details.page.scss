@@ -1,0 +1,28 @@
+.comments {
+	padding: 10px;
+	height: 100px;
+
+	display: -webkit-box;
+
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+ion-textarea {
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+.content-back {
+	cursor: pointer;
+	p {
+		font-size: 16px;
+		color: #000;
+	}
+}

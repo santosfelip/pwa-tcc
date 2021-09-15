@@ -1,15 +1,11 @@
-<ion-card class="classCss">
+<ion-card>
 	<ion-card-header>
 		<ion-card-subtitle>
 			{{marketName}}
 			<a [href]="urlToMaps" target="_blank"> Como chegar?</a>
-			<ion-icon
-				(click)="handleClick(productId)"
-				class="ion-float-right"
-				color="danger"
-				*ngIf="isDelete"
-				name="trash-outline"
-			></ion-icon>
+			<div class="iconClick ion-float-right" (click)="handleClick(productId)">
+				<ion-icon color="danger" *ngIf="isDelete" name="trash-outline"></ion-icon>
+			</div>
 		</ion-card-subtitle>
 	  	<ion-card-title>{{productName}} - R$ {{price}}</ion-card-title>
 		<ion-card-subtitle *ngIf="isPromotional" color="tertiary">
@@ -31,7 +27,7 @@
 				<ion-text [color]="isFeedBack ? 'primary' : 'ligth'">Não encontrei o Produto</ion-text>
 			</div>
 		</ion-row>
-		<ion-button class="ion-margin-top">
+		<ion-button class="ion-margin-top" (click)="navigateProductDetail()">
 			Comentários
 		</ion-button>
 	</ion-card-content>

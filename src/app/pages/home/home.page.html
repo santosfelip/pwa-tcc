@@ -12,6 +12,7 @@
 		[categoriesList]="categoriesListClicked"
 		(clicked)="removeCategorie($event)"
 	></app-categories>
+	<p>Cidade: {{cityAndStateCode}}</p>
 	<ion-fab vertical="bottom" horizontal="end" slot="fixed" >
 		<ion-fab-button (click)="redirectToAddProduct()">
 			<ion-icon name="add-outline"></ion-icon>

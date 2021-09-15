@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
 import { FeedBackService } from 'src/app/services/feedback.service';
 
@@ -31,7 +32,8 @@ export class ProdutoComponent implements OnInit{
 
 	constructor(
 		private eventService: EventService,
-		private feedBackService: FeedBackService
+		private feedBackService: FeedBackService,
+		private router: Router
 	){}
 
 	ngOnInit() {
@@ -76,10 +78,13 @@ export class ProdutoComponent implements OnInit{
 		}
 	}
 
+	public navigateProductDetail(): void {
+		this.router.navigate([`/product-details/${this.productId}`], { replaceUrl: true });
+	}
+
 	private setPublishedIn(): void {
 		// eslint-disable-next-line no-underscore-dangle
 		const creatAt = new Date(this.creat_at._seconds * 1000);
 		this.publishedIn = creatAt.toLocaleDateString('pt-BR');
 	}
-
 }

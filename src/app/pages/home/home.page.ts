@@ -7,6 +7,7 @@ import { Toast } from 'src/app/utils/toast';
 import { EventService } from 'src/app/services/event.service';
 import categories from '../../utils/categories.json';
 import { FeedBackService } from 'src/app/services/feedback.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ export class HomePage {
 	public productsList: Array<IProduct>;
 	public showDistance: boolean = true;
 	public notFound: boolean = false;
+	public cityAndStateCode: string;
 
 	public categoriesList = categories.categoriesChip.map((category) => ({
 		outiline: true,
@@ -34,10 +36,12 @@ export class HomePage {
 		private eventService: EventService,
 		private feedBackService: FeedBackService,
 		private loading: Loading,
-		private toast: Toast
+		private toast: Toast,
+		private userService: UserService
 	) { }
 
 	async ionViewWillEnter() {
+		await this.getLocationUser();
 		await this.getProducts();
 	}
 
@@ -149,6 +153,15 @@ export class HomePage {
 			this.arrayFeedBacks = await this.feedBackService.getAll();
 		} catch (error) {
 			this.toast.show('Não foi realizar esta requisição!', 2000, 'danger');
+		}
+	}
+
+	private async getLocationUser(): Promise<void> {
+		try {
+			const user = await this.userService.getCurrentUser();
+			this.cityAndStateCode = `${user?.city}/${user?.stateCode}`;
+		} catch (err) {
+			this.toast.show('Não foi possível obter a localização do Usuário!', 2000, 'danger');
 		}
 	}
 }
