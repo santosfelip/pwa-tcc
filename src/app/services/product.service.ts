@@ -107,9 +107,20 @@ export class ProductService {
 		}
 	}
 
-	public async getProductById(): Promise<any> {
+	public async getProductByUserId(): Promise<any> {
 		const { uid } = this.storage.getItemData('userData');
-		const endpoint: string = `${API.v1}/product/${uid}`;
+		const endpoint: string = `${API.v1}/products/user/${uid}`;
+
+		try {
+
+			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
+		} catch (err) {
+			throw Error(HandleError.getMessageError(err));
+		}
+	}
+
+	public async getProductByProductId(productId: string): Promise<any> {
+		const endpoint: string = `${API.v1}/product/${productId}`;
 
 		try {
 

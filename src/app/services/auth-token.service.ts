@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import jwt_decode from 'jwt-decode';
-import { IUser } from '../interfaces/user.interface';
 import { LocalStorage } from './localStorage.service';
 
 

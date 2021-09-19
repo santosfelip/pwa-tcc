@@ -53,7 +53,7 @@ export class ProductPage {
 			await this.loading.default();
 			await this.getLikes();
 
-			const response = await this.productService.getProductById();
+			const response = await this.productService.getProductByUserId();
 			this.productsList = this.formatProductData(response);
 		} catch (err) {
 			this.toast.show('Não foi possível localizar os Produtos!', 2000, 'danger');

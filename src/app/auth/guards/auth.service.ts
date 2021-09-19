@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from 'src/environments/environment';
 import { AuthTokenService } from 'src/app/services/auth-token.service';
-import { IUser } from 'src/app/interfaces/user.interface';
 import { UserService } from 'src/app/services/user.service';
 import { LocalStorage } from 'src/app/services/localStorage.service';
 
