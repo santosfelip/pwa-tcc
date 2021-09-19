@@ -10,7 +10,8 @@ import { Toast } from 'src/app/utils/toast';
 
 @Component({
   selector: 'app-perfil',
-  templateUrl: './perfil.page.html'
+  templateUrl: './perfil.page.html',
+  styleUrls: ['./perfil.page.scss']
 })
 export class PerfilPage implements OnInit {
 
@@ -47,6 +48,9 @@ export class PerfilPage implements OnInit {
 		}
 	];
 
+
+	public userPlan: string;
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router,
@@ -64,6 +68,8 @@ export class PerfilPage implements OnInit {
 			city: '',
 			stateCode: ''
 		});
+
+		this.userPlan = this.userService.getCurrentUser().plan;
 	}
 
 	public async editUser(): Promise<void> {

@@ -1,14 +1,15 @@
 <app-menu-lateral></app-menu-lateral>
 
-<ion-content id="main-content" [fullscreen]="true">
+<ion-content id="main-content" scrollY="false">
 	<app-header [hasMenu]="true"></app-header>
-	<ion-content [fullscreen]="true">
-		<app-form
-			[formGroup] = "registerForm"
-			[formFields] = "formFields"
-			[formButtons] = "formButtons"
-			[showSelectStateCity] = "true"
-		></app-form>
-	</ion-content>
+	<ion-row>
+		<h1>Seu perfil é {{ userPlan }}</h1>
+	</ion-row>
+	<app-form
+		[formGroup] = "registerForm"
+		[formFields] = "formFields"
+		[formButtons] = "formButtons"
+		[showSelectStateCity] = "true"
+	></app-form>
 </ion-content>
 

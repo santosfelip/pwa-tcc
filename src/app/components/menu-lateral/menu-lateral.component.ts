@@ -32,6 +32,11 @@ export class MenuLateralComponent {
 			link: '/produto'
 		},
 		{
+			label: 'Lista de Compra',
+			iconName: 'document-text-outline',
+			link: '/home'
+		},
+		{
 			label: 'Perfil',
 			iconName: 'person-circle-outline',
 			link: '/perfil'

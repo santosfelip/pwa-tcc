@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { EventService } from 'src/app/services/event.service';
 import { FeedBackService } from 'src/app/services/feedback.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-produto',
@@ -33,7 +35,9 @@ export class ProdutoComponent implements OnInit{
 	constructor(
 		private eventService: EventService,
 		private feedBackService: FeedBackService,
-		private router: Router
+		private router: Router,
+		private userService: UserService,
+		private alertController: AlertController
 	){}
 
 	ngOnInit() {
@@ -80,6 +84,30 @@ export class ProdutoComponent implements OnInit{
 
 	public navigateProductDetail(): void {
 		this.router.navigate([`/product-details/${this.productId}`], { replaceUrl: true });
+	}
+
+	public async addToShoppingList(): Promise<void> {
+		try {
+			const userPlan = this.userService.getCurrentUser().plan;
+			if(userPlan === 'iniciante') {
+				this.showAlert();
+			} else {
+				console.log('TODO');
+			}
+		} catch (error) {
+			throw Error(error);
+		}
+	}
+
+	private async showAlert() {
+		const alert = await this.alertController.create({
+			header: 'Atenção!',
+			message: `Usuários com o perfil de INICIANTE não podem adicionar produtos na lista de compras.
+			Continue usando o APP para ganhar mais pontos e assim subir de nível!`,
+			buttons: [{ text:'Ok' }],
+		  });
+
+		await alert.present();
 	}
 
 	private setPublishedIn(): void {
