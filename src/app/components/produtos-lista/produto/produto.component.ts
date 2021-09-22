@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { EventService } from 'src/app/services/event.service';
 import { FeedBackService } from 'src/app/services/feedback.service';
+import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
+import { Toast } from 'src/app/utils/toast';
 
 @Component({
   selector: 'app-produto',
@@ -37,7 +39,9 @@ export class ProdutoComponent implements OnInit{
 		private feedBackService: FeedBackService,
 		private router: Router,
 		private userService: UserService,
-		private alertController: AlertController
+		private alertController: AlertController,
+		private productService: ProductService,
+		private toast: Toast
 	){}
 
 	ngOnInit() {
@@ -88,11 +92,13 @@ export class ProdutoComponent implements OnInit{
 
 	public async addToShoppingList(): Promise<void> {
 		try {
-			const userPlan = this.userService.getCurrentUser().plan;
+			const userPlan = await this.userService.getCurrentUser().plan;
 			if(userPlan === 'iniciante') {
 				this.showAlert();
 			} else {
-				console.log('TODO');
+				await this.productService.addProductInPurchaseList(this.productId);
+
+				await this.toast.show('Produto adicionado com sucesso!', 2000);
 			}
 		} catch (error) {
 			throw Error(error);

@@ -130,6 +130,33 @@ export class ProductService {
 		}
 	}
 
+	public async addProductInPurchaseList(productId: string): Promise<void> {
+		try {
+			const currentUser = this.userService.getCurrentUser();
+
+			currentUser.purchaseList = [
+				...currentUser?.purchaseList,
+				productId
+			];
+
+			await this.userService.editUser(currentUser);
+		} catch (err) {
+			throw Error(HandleError.getMessageError(err));
+		}
+	}
+
+	public async getPurchaseList(): Promise<any> {
+		try {
+			const { uid } = this.userService.getCurrentUser();
+			const endpoint: string = `${API.v1}/products/purchase-list/${uid}`;
+
+			return await this.httpClient.get(endpoint, { headers: this.getHeader() }).toPromise();
+		} catch (err) {
+			throw Error(HandleError.getMessageError(err));
+		}
+
+	}
+
 	private getHeader(): HttpHeaders {
 		return new HttpHeaders({
             authorization: `Bearer ${this.authTokenService.getToken()}`
