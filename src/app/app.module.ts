@@ -29,12 +29,14 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RankingPage } from './pages/ranking/ranking.page';
 import { WelcomePage } from './pages/welcome/welcome.page';
 import { ProductDetailsPage } from './pages/product-details/product-details.page';
+import { PurchaseListPage } from './pages/purchase-list/purchase-list.page';
 @NgModule({
 	declarations: [
 		AppComponent,
 		RankingPage,
 		WelcomePage,
 		ProductDetailsPage,
+		PurchaseListPage,
 		ProdutoComponent,
 		NotFoundComponent,
 		CategoriesComponent,

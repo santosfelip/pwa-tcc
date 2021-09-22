@@ -10,6 +10,7 @@ import { ProductPage } from './pages/product/product.page';
 import { RankingPage } from './pages/ranking/ranking.page';
 import { WelcomePage } from './pages/welcome/welcome.page';
 import { ProductDetailsPage } from './pages/product-details/product-details.page';
+import { PurchaseListPage } from './pages/purchase-list/purchase-list.page';
 
 const routes: Routes = [
 	{
@@ -49,6 +50,11 @@ const routes: Routes = [
 	{
 		path: 'product-details/:productId',
 		component: ProductDetailsPage,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'purchase-list',
+		component: PurchaseListPage,
 		canActivate: [AuthGuardService]
 	},
 	{

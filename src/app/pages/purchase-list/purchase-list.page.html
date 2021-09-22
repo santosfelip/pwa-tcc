@@ -1,0 +1,26 @@
+<app-menu-lateral></app-menu-lateral>
+
+<ion-content id="main-content" [fullscreen]="true">
+	<app-header [hasMenu]="true"></app-header>
+		<ion-button (click)="generatePDF()">Download em PDF</ion-button>
+		<ion-list>
+			<ion-list-header>
+
+			</ion-list-header>
+			<ion-item>
+				<ion-label>Produto</ion-label>
+				<ion-label>Mercado</ion-label>
+				<ion-label>Preço</ion-label>
+			</ion-item>
+			<ion-item *ngFor="let item of purchaseList">
+				<ion-label>{{item.productName}}</ion-label>
+				<ion-label>{{item.market}}</ion-label>
+				<ion-label>{{item.price}}</ion-label>
+
+
+				<!-- <p>{{item.productName}}</p>
+				<p>{{ item.market }}</p>
+				<p>{{ item.price }}</p> -->
+			</ion-item>
+		</ion-list>
+</ion-content>
