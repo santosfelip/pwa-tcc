@@ -3,5 +3,5 @@ export const environment = {
 };
 
 export const API = {
-	v1: 'https://backend-tcc-320521.ue.r.appspot.com/app/v1'
+	v1: 'https://quantu-api.herokuapp.com/app/v1'
 };
